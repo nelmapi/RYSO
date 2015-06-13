@@ -1,5 +1,9 @@
 // Routes
 
+Router.configure({
+    layoutTemplate: 'layout'
+});
+
 Router.route('/', function () {
     this.render('homePage');
 });
@@ -11,11 +15,3 @@ Router.route('/products', function () {
 Router.route('/orders', function () {
     this.render('orders');
 });
-
-
-// Template Helpers
-Template.products.helpers({
-    productList: function () {
-        return Products.find();
-    }
-});;
