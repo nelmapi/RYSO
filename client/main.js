@@ -15,3 +15,7 @@ Router.route('/products', function () {
 Router.route('/orders', function () {
     this.render('orders');
 });
+
+Router.route('/help', function () {
+    this.render('help');
+});
