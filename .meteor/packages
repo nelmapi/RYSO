@@ -11,3 +11,4 @@ bootstrap
 jquery
 iron:router
 fongandrew:find-and-modify
+mrt:jquery-validation
