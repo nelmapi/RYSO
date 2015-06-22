@@ -55,8 +55,12 @@
                     </fieldset>
                 </div>
                 <div class="modal-footer">
+                    {{#if editing}}
+                        <button type="button" class="btn btn-danger deleteBtn">Eliminar</button>
+                    {{/if}}
+                    <button type="button" class="btn btn-success saveBtn">Guardar</button>
                     <button type="button" class="btn btn-default cancelBtn" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary saveBtn">Guardar</button>
+                    
                 </div>
             {{/autoForm}}
             </div>

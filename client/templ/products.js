@@ -9,6 +9,9 @@ Template.products.helpers({
 Template.productForm.helpers({
     newEditProduct: function () {
         return Products.findOne({_id: Session.get('productToEdit')});
+    },
+    editing: function() {
+        return (null != Session.get('productToEdit'));
     }
 });
 
@@ -49,11 +52,16 @@ Template.productForm.events({
     },
     'click .showProductFormBtn' : function () {
         AutoForm.resetForm('insertProductForm');
+    },
+    'click .deleteBtn' : function(event, tmpl) {
+        var recordId = Session.get('productToEdit');
+        Products.remove(recordId);
+        tmpl.find('.cancelBtn').click();
     }
 });
 
 Template.productRow.events({
-    'dblclick ': function (event, tmpl) {
+    'dblclick .productRow': function (event, tmpl) {
         Session.set('productToEdit', tmpl.data._id);
         $('.showProductFormBtn').click();
     }
