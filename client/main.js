@@ -5,18 +5,22 @@ Router.configure({
 });
 
 Router.route('/', function () {
+    Session.set('currentPage', 'homePage');
     this.render('homePage');
 });
 
 Router.route('/products', function () {
+    Session.set('currentPage', 'products');
     this.render('products');
 });
 
 Router.route('/orders', function () {
+    Session.set('currentPage', 'orders');
     this.render('orders');
 });
 
 Router.route('/help', function () {
+    Session.set('currentPage', 'help');
     this.render('help');
 });
 

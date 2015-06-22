@@ -54,7 +54,6 @@ Template.productForm.events({
 
 Template.productRow.events({
     'dblclick ': function (event, tmpl) {
-        console.log('data: ', tmpl);
         Session.set('productToEdit', tmpl.data._id);
         $('.showProductFormBtn').click();
     }
