@@ -37,8 +37,8 @@
 </template>
 
 <template name="productForm">
-    <a class="btn btn-primary showProductFormBtn" data-toggle="modal" href='#modal-id'>Agregar Producto</a>
-    <div class="modal fade" id="modal-id">
+    <a class="btn btn-primary showProductFormBtn" data-toggle="modal" href='#productFormModal'>Agregar Producto</a>
+    <div class="modal fade" id="productFormModal">
         <div class="modal-dialog">
             <div class="modal-content">
             {{#autoForm collection="Products" id="insertProductForm" doc=newEditProduct type="insert"}}
