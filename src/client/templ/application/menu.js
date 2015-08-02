@@ -5,9 +5,10 @@ Template.menu.helpers({
 });
 
 Template.menu.onRendered(function() {
-    if (!Meteor.Device.isDesktop()) {
-        $('.menuItem').on('click', function() {
-            $('#toggleButton').click();
-        });
-    }
+    $('.menuItem').on('click', function() {
+        var toggleButton = $('#toggleButton');
+        if(toggleButton.css('display') != 'none') {
+            toggleButton.click();
+        }
+    });
 });
