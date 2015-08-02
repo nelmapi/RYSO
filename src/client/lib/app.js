@@ -1,0 +1,1 @@
+angular.module('ryso',['angular-meteor', 'ui.router']);

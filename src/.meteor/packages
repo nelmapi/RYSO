@@ -16,3 +16,6 @@ aldeed:collection2
 twbs:bootstrap
 suxez:jasny-bootstrap
 mystor:device-detection
+fastclick
+urigo:angular
+angularui:angular-ui-router

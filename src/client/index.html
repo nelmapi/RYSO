@@ -1,5 +1,12 @@
 <head>
   <title>RYSO</title>
+  <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
+<body ng-app="ryso">
+  <meteor-include src="menu"></meteor-include>
+  <div class="container">
+    <div ui-view></div>
+  </div>
+</body>
