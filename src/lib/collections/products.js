@@ -27,9 +27,16 @@ Products.attachSchema(new SimpleSchema({
         label: 'Descripcion',
         max: 250
     },
-    price: {
+    price_mesa: {
         type: Number,
-        label: 'Precio',
+        label: 'Precio Mesa',
+        decimal: true,
+        min: 0,
+        max: 1000
+    },
+    price_llevar: {
+        type: Number,
+        label: 'Precio Llevar',
         decimal: true,
         min: 0,
         max: 1000

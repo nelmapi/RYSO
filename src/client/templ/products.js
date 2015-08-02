@@ -1,4 +1,5 @@
 Session.setDefault('productToEdit', null);
+Session.setDefault('productToDelete', null);
 
 Template.products.helpers({
     productList: function () {
@@ -20,7 +21,8 @@ Template.productForm.events({
         var prodName = tmpl.find('#nameInput').value;
         var prodType = tmpl.find('#typeInput').value;
         var prodDesc = tmpl.find('#descInput').value;
-        var prodPrice = tmpl.find('#priceInput').value;
+        var prodPrice_mesa = tmpl.find('#priceInput').value;
+        var prodPrice_llevar = tmpl.find('#price2Input').value;
         if (AutoForm.validateForm('insertProductForm')) {
             var recordId = Session.get('productToEdit');
             if (recordId) {//editing
@@ -30,7 +32,8 @@ Template.productForm.events({
                         name: prodName,
                         description: prodDesc,
                         type: prodType,
-                        price: prodPrice
+                        price_mesa: prodPrice_mesa,
+                        price_llevar: prodPrice_llevar
                     }
                 });
             } else {//newRecord
@@ -40,7 +43,8 @@ Template.productForm.events({
                     name:prodName,
                     description: prodDesc,
                     type: prodType,
-                    price: prodPrice
+                    price_mesa: prodPrice_mesa,
+                    price_llevar: prodPrice_llevar
                 });
             }
 
@@ -52,17 +56,32 @@ Template.productForm.events({
     },
     'click .showProductFormBtn' : function () {
         AutoForm.resetForm('insertProductForm');
-    },
-    'click .deleteBtn' : function(event, tmpl) {
-        var recordId = Session.get('productToEdit');
-        Products.remove(recordId);
-        tmpl.find('.cancelBtn').click();
     }
 });
 
 Template.productRow.events({
-    'dblclick .productRow': function (event, tmpl) {
+    'click .editBtn' : function(event, tmpl) {
         Session.set('productToEdit', tmpl.data._id);
         $('.showProductFormBtn').click();
+    },
+    'click .deleteBtn' : function (event, tmpl) {
+        Session.set('productToDelete', tmpl.data._id);
+        $('#productConfirmFormModal').modal('show');
     }
+});
+
+Template.confirmDeleteProduct.helpers({
+    product : function() {
+        return Products.findOne({_id: Session.get('productToDelete')});
+    }
+});
+
+Template.confirmDeleteProduct.events({
+     'click .deleteConfirmBtn' : function(event, tmpl) {
+         Products.remove(Session.get('productToDelete'));
+         $('#productConfirmFormModal').modal('hide');
+     },
+     'click .cancelConfirmBtn' : function() {
+        Session.set('productToDelete', null);
+     }
 });
