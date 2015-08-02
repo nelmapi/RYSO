@@ -2,10 +2,11 @@
   <table class="table table-striped table-hover">
       <thead>
           <tr>
-              <th>Codigo</th>
-              <th>Nombre</th>
-              <th>Cantidad</th>
-              <th>Detalle</th>
+              <th>N# Orden</th>
+              <th>Tipo</th>
+              <th>Cliente</th>
+              <th>Estado</th>
+              <th>Comentarios</th>
           </tr>
       </thead>
       <tbody>
@@ -18,8 +19,10 @@
 
 <template name="orderRow">
     <tr>
-        <td>{{id}}</td>
-        <td>{{name}}</td>
-        <td>{{detalle}}</td>
+        <td>{{numOrder}}</td>
+        <td>{{type}}</td>
+        <td>{{client}}</td>
+        <td>{{state}}</td>
+        <td>{{commnent}}</td>
     </tr>
 </template>
