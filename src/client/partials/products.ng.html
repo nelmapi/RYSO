@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="ProductsController">
     <div class="row-fluid">
         <div class="page-header">
           <h1>Productos</h1>
@@ -13,22 +13,22 @@
                     <th>Nombre</th>
                     <th>Tipo</th>
                     <th>Descripcion</th>
-                    <th>Precio (Bs)</th>
-                    <th>Precio Llevar (Bs)</th>
+                    <th style="text-align: center;">Precio en Mesa (Bs)</th>
+                    <th style="text-align: center;">Precio para Llevar (Bs)</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr ng-repeat="p in products">
                     <td style="display: flex;border-top:0px;">
-                        <button type="button" class="btn btn-danger glyphicon glyphicon-remove-circle" style="margin-right: 3px;"></button>
-                        <button type="button" class="btn btn-info glyphicon glyphicon-edit editBtn" style="margin-right: 3px;"></button>
+                        <button ng-click="remove(p.code)" type="button" class="btn btn-danger glyphicon glyphicon-remove-circle" style="margin-right: 3px;"></button>
+                        <button ng-click="edit(p)" type="button" class="btn btn-info glyphicon glyphicon-edit editBtn" style="margin-right: 3px;"></button>
                     </td>
-                    <td>PRO01</td>
-                    <td>Charquesito</td>
-                    <td>Plato</td>
-                    <td>Mote con papas ricas, un quesillo delicioso, el mejor charque fr cbba y por si fuera poco la mejor llajua cochala</td>
-                    <td>90</td>
-                    <td>95</td>
+                    <td>{{p.code}}</td>
+                    <td>{{p.name}}</td>
+                    <td>{{p.type}}</td>
+                    <td>{{p.description}}</td>
+                    <td style="text-align: center;">{{p.localprice}}</td>
+                    <td style="text-align: center;">{{p.outsideprice}}</td>
                 </tr>
             </tbody>
         </table>
