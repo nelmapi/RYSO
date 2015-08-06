@@ -106,6 +106,16 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
             if ($scope.addProductForm) {
                 $scope.addProductForm.$dirty = false;
             }
+
+            if ($scope.addProductForm) {
+                var autofields = $scope.addProductForm.autofields;
+                autofields.name.$dirty = false;
+                autofields.description.$dirty = false;
+                autofields.type.$dirty = false;
+                autofields.localPrice.$dirty = false;
+                autofields.outsidePrice.$dirty = false;
+            }
+
             $scope.$emit('closeProductForm');
         };
 
@@ -120,20 +130,35 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
             if (autofields.type.$invalid) {
                 autofields.type.$dirty = true;
             }
+            if (autofields.localPrice.$invalid) {
+                autofields.localPrice.$dirty = true;
+            }
+            if (autofields.outsidePrice.$invalid) {
+                autofields.outsidePrice.$dirty = true;
+            }
             return $scope.addProductForm.$valid;
         };
 
         $scope.saveProduct = function () {
-            console.log('product: ', $scope.newProduct);
-            console.log('$scope.addProductForm.: ', $scope.addProductForm);
             if (!$scope.isProductFormValid()) return;
-            /*if ($scope.addProductForm.$valid) {
-                
+
+            $scope.newProduct.productId = Counters.getNextSecuence('productId');
+            if ($scope.newProduct._id) {
+                Products.update($scope.newProduct._id, 
+                {
+                    $set:{
+                        name: $scope.newProduct.name,
+                        description: $scope.newProduct.description,
+                        type: $scope.newProduct.type,
+                        localPrice: $scope.newProduct.localPrice,
+                        outsidePrice: $scope.newProduct.outsidePrice
+                    }
+                });
             } else {
-                $scope.options.validation.showMessages = true;
-            }*/
+                Products.insert($scope.newProduct);
+            }
 
-
+            $scope.resetProduct();
         }
 
         $scope.resetProduct();
