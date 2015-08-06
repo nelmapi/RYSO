@@ -3,7 +3,7 @@
     <div class="modal fade" id="productFormModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form name="addProductForm" ng-submit="saveProduct()">
+                <form name="addProductForm" ng-submit="saveProduct()" novalidate>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Agregar Producto</h4>
@@ -13,7 +13,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success saveBtn">Guardar</button>
-                        <button type="button" class="btn btn-default cancelBtn" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-default cancelBtn" ng-click="resetProduct()">Cancelar</button>
                     </div>
                 </form>
             </div>

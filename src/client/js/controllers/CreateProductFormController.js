@@ -1,12 +1,7 @@
 angular.module("ryso").controller("CreateProductFormController", ['$scope', '$stateParams', '$meteor', '$filter',
     function($scope, $stateParams, $meteor, $filter){
-        $scope.newProduct = {
-            name: '',
-            type: '',
-            description: '',
-            localPrice: '',
-            outsidePrice: ''
-        };
+
+        $scope.newProduct = {};
 
         $scope.productTypes = {
             'Plato' : 'Plato',
@@ -19,11 +14,13 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
                 label: 'Nombre',
                 type: 'text',
                 attr: {
-                    ngMaxlength: 100,
+                    ngMaxlength: 80,
+                    ngMinlength: 1,
                     required: true
                 },
                 msgs: {
-                    maxlength: 'El nombre del producto no debe exceder los 100 caracteres.'
+                    required : 'Este campo es requerido',
+                    maxlength: 'El nombre del producto no debe exceder los 80 caracteres.'
                 }
             },
             {
@@ -33,6 +30,9 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
                 list: 'key as value for (key,value) in productTypes',
                 attr: {
                     required: true
+                },
+                msgs: {
+                    required : 'Este campo es requerido'
                 }
             },
             {
@@ -44,6 +44,7 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
                     required: true
                 },
                 msgs: {
+                    required : 'Este campo es requerido',
                     maxlength: 'El nombre del producto no debe exceder los 1000 caracteres.'
                 }
             },
@@ -57,6 +58,7 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
                     max: 1000
                 },
                 msgs : {
+                    required : 'Este campo es requerido',
                     min: 'Por favor ingrese un numero mayor a cero.',
                     max: 'Por favor ingrese un numero menor o igual a 1000.'
                 }
@@ -71,6 +73,7 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
                     max: 1000
                 },
                 msgs : {
+                    required : 'Este campo es requerido',
                     min: 'Por favor ingrese un numero mayor a cero.',
                     max: 'Por favor ingrese un numero menor o igual a 1000.'
                 }
@@ -80,39 +83,58 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
         $scope.options = {
             validation: {
                 enabled: true,
-                showMessages: false
+                showMessages: true,
+                defaultMsgs : false
             },
             layout: {
                 type: 'basic',
                 labelSize: 3,
                 inputSize: 9
+            },
+            defaultOption : 'Seleccionar'
+        };
+
+        $scope.resetProduct = function () {
+            $scope.newProduct = {
+                name: '',
+                type: '',
+                description: '',
+                localPrice: '',
+                outsidePrice: ''
+            };
+            $('#productFormModal').modal('hide');
+            if ($scope.addProductForm) {
+                $scope.addProductForm.$dirty = false;
             }
         };
 
-        // angular.element(document).ready(function () {
-        //     InvalidInputHelper(document.getElementById("name"), {
-        //         emptyText: "Por favor introdusca el nombre del producto."
-        //     });
-
-        //     InvalidInputHelper(document.getElementById("type"), {
-        //         emptyText: "Por favor seleccione el tipo de producto."
-        //     });
-
-        //     InvalidInputHelper(document.getElementById("description"), {
-        //         emptyText: "Por favor introdusca la descripcion del producto."
-        //     });
-
-        //     InvalidInputHelper(document.getElementById("localPrice"), {
-        //         emptyText: "Por favor introdusca el precio en mesa."
-        //     });
-
-        //     InvalidInputHelper(document.getElementById("outsidePrice"), {
-        //         emptyText: "Por favor introdusca el precio para llevar."
-        //     });
-        // });
+        $scope.isProductFormValid = function () {
+            var autofields = $scope.addProductForm.autofields;
+            if (autofields.name.$invalid) {
+                autofields.name.$dirty = true;
+            }
+            if (autofields.description.$invalid) {
+                autofields.description.$dirty = true;
+            }
+            if (autofields.type.$invalid) {
+                autofields.type.$dirty = true;
+            }
+            return $scope.addProductForm.$valid;
+        }
 
         $scope.saveProduct = function () {
-            console.log('formValid: ' + $scope.addProductForm.$valid);
+            console.log('product: ', $scope.newProduct);
+            console.log('$scope.addProductForm.: ', $scope.addProductForm);
+            if (!$scope.isProductFormValid()) return;
+            /*if ($scope.addProductForm.$valid) {
+                
+            } else {
+                $scope.options.validation.showMessages = true;
+            }*/
+
+
         }
+
+        $scope.resetProduct();
     }
 ]);
