@@ -8,7 +8,6 @@ meteor-platform
 autopublish
 insecure
 jquery
-iron:router
 fongandrew:find-and-modify
 aldeed:autoform
 aldeed:simple-schema

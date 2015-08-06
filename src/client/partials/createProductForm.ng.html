@@ -1,0 +1,22 @@
+<div>
+    <a class="btn btn-primary showProductFormBtn" data-toggle="modal" href='#productFormModal'>Agregar Producto</a>
+    <div class="modal fade" id="productFormModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="addProductForm" ng-submit="saveProduct()">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Agregar Producto</h4>
+                    </div>
+                    <div class="modal-body">
+                        <auto:fields fields="schema" data="newProduct" options="options"></auto:fields>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success saveBtn">Guardar</button>
+                        <button type="button" class="btn btn-default cancelBtn" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,1 @@
-angular.module('ryso',['angular-meteor', 'ui.router']);
+angular.module('ryso',['angular-meteor', 'ui.router', 'autofields']);
