@@ -4,11 +4,23 @@
           <h1>Ordenes</h1>
         </div>
     </div>
-</div>
-<div class="orderViewOptions">
-    <div class="btn-group" role="group">
-      <button type="button" class="btn btn-default newOrderBtn active">Nueva Orden</button>
-      <button type="button" class="btn btn-default orderListBtn">Lista de Ordenes</button>
-      <button type="button" class="btn btn-default ordersOverviewBtn">Vista General</button>
+    <div class="orderViewOptions">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default newOrderBtn" value="newOrderBtn" ng-click="selection = 'newOrderBtn'">Nueva Orden</button>
+          <button type="button" class="btn btn-default orderListBtn" value="orderListBtn" ng-click="selection = 'orderListBtn'">Lista de Ordenes</button>
+          <button type="button" class="btn btn-default ordersOverviewBtn" value="ordersOverviewBtn" ng-click="selection = 'ordersOverviewBtn'">Vista General</button>
+        </div>
+    </div>
+
+    <div ng-switch on="selection">
+      <div ng-switch-default>
+        New Order
+      </div>
+      <div ng-switch-when="orderListBtn">
+        <order-list></order-list>
+      </div>
+      <div ng-switch-when="ordersOverviewBtn">
+        View Orders
+      </div>
     </div>
 </div>
