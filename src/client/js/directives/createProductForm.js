@@ -6,7 +6,7 @@ angular.module("ryso").directive('createProductForm', function () {
         transclude: true,
         controller: 'CreateProductFormController',
         scope: {
-            //scope parameters
+            newProduct: '='
         }
     }
 });

@@ -3,7 +3,8 @@
         <div class="page-header">
           <h1>Productos</h1>
         </div>
-        <create-product-form></create-product-form>
+        <remove-product-confirm-dialog product="getProductToDelete()"></remove-product-confirm-dialog>
+        <create-product-form new-product="getProductToEdit()"></create-product-form>
         <br /><br />
         <table class="table table-striped table-hover">
             <thead>
@@ -20,15 +21,15 @@
             <tbody>
                 <tr ng-repeat="p in products">
                     <td style="display: flex;border-top:0px;">
-                        <button ng-click="remove(p.code)" type="button" class="btn btn-danger glyphicon glyphicon-remove-circle" style="margin-right: 3px;"></button>
+                        <button ng-click="showRemoveDialog(p)" type="button" class="btn btn-danger glyphicon glyphicon-remove-circle" style="margin-right: 3px;"></button>
                         <button ng-click="edit(p)" type="button" class="btn btn-info glyphicon glyphicon-edit editBtn" style="margin-right: 3px;"></button>
                     </td>
                     <td>{{p.code}}</td>
                     <td>{{p.name}}</td>
                     <td>{{p.type}}</td>
                     <td>{{p.description}}</td>
-                    <td style="text-align: center;">{{p.localprice}}</td>
-                    <td style="text-align: center;">{{p.outsideprice}}</td>
+                    <td style="text-align: center;">{{p.localPrice}}</td>
+                    <td style="text-align: center;">{{p.outsidePrice}}</td>
                 </tr>
             </tbody>
         </table>

@@ -1,7 +1,7 @@
 angular.module("ryso").controller("CreateProductFormController", ['$scope', '$stateParams', '$meteor', '$filter',
     function($scope, $stateParams, $meteor, $filter){
 
-        $scope.newProduct = {};
+        $scope.newProduct = null;
 
         $scope.productTypes = {
             'Plato' : 'Plato',
@@ -106,6 +106,7 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
             if ($scope.addProductForm) {
                 $scope.addProductForm.$dirty = false;
             }
+            $scope.$emit('closeProductForm');
         };
 
         $scope.isProductFormValid = function () {
@@ -120,7 +121,7 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
                 autofields.type.$dirty = true;
             }
             return $scope.addProductForm.$valid;
-        }
+        };
 
         $scope.saveProduct = function () {
             console.log('product: ', $scope.newProduct);

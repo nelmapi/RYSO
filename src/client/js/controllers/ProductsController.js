@@ -1,47 +1,35 @@
 angular.module("ryso").controller("ProductsController", ['$scope', '$stateParams', '$meteor', '$filter',
     function($scope, $stateParams, $meteor, $filter){
-        $scope.products = [
-            {
-                'code': "CO05",
-                'name': "Charque",
-                'type': "Plato",
-                'description': "dfadf",
-                'localprice': 12,
-                'outsideprice': 15
-            },
-            {
-                'code': "CO06",
-                'name': "Pique",
-                'type': "Plato",
-                'description': "ddddd",
-                'localprice': 16,
-                'outsideprice': 19
-            },
-            {
-                'code': "CO07",
-                'name': "Pato",
-                'type': "Plato",
-                'description': "dd dsfasf",
-                'localprice': 22,
-                'outsideprice': 25
-            }
-        ];
 
-        $scope.load = function(){
-            //TODO: read data from server
+        $scope.products = $meteor.collection(Products);
+        $scope.productToDelete = null;
+        $scope.productToEdit = {};
+
+        $scope.showRemoveDialog = function (product) {
+            $scope.productToDelete = product;
+            $('#productConfirmFormModal').modal('show');
         };
 
-        $scope.add = function(){
-            //TODO: add a new product
+        $scope.getProductToDelete = function () {
+            return $scope.productToDelete;
         };
 
-        $scope.remove = function(code){
-            console.log("remove product " + code);
-
+        $scope.getProductToEdit = function () {
+            return $scope.productToEdit;
         };
 
-        $scope.edit = function(product){
+        $scope.$on('confirmRemoveProduct', function(event, productId) {
+            Products.remove(productId);
+            $('#productConfirmFormModal').modal('hide');
+        });
 
+        $scope.$on('closeProductForm', function(event) {
+            $scope.productToEdit = {};
+        });
+
+        $scope.edit = function(product) {
+            $scope.productToEdit = product;
+            $('#productFormModal').modal('show');
         };
     }
 ]);
