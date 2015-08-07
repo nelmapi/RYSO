@@ -5,9 +5,18 @@ angular.module("ryso").controller("ProductsController", ['$scope', '$stateParams
         $scope.productToDelete = null;
         $scope.productToEdit = {};
 
+        $scope.getType = function () {
+            return 'Producto';
+        };
+
+        $scope.getDeleteMessage = function () {
+            var message = $scope.productToDelete ? '¿El producto "' + $scope.productToDelete.name  + '" sera eliminado, desea continuar?' : '';
+            return message;
+        };
+
         $scope.showRemoveDialog = function (product) {
             $scope.productToDelete = product;
-            $('#productConfirmFormModal').modal('show');
+            $('#confirmRemoveDialogModal').modal('show');
         };
 
         $scope.getProductToDelete = function () {
@@ -18,9 +27,10 @@ angular.module("ryso").controller("ProductsController", ['$scope', '$stateParams
             return $scope.productToEdit;
         };
 
-        $scope.$on('confirmRemoveProduct', function(event, productId) {
-            Products.remove(productId);
-            $('#productConfirmFormModal').modal('hide');
+        $scope.$on('confirmRemoveSuccess', function(event, itemId, itemType) {
+            if (itemType === 'Producto') {
+                Products.remove(itemId);
+            }
         });
 
         $scope.$on('closeProductForm', function(event) {

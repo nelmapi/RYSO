@@ -6,7 +6,7 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
         $scope.productTypes = {
             'Plato' : 'Plato',
             'Bebida': 'Bebida'
-        }
+        };
 
         $scope.schema = [
             {
@@ -102,7 +102,7 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
                 localPrice: '',
                 outsidePrice: ''
             };
-            $('#productFormModal').modal('hide');
+
             if ($scope.addProductForm) {
                 $scope.addProductForm.$dirty = false;
             }
@@ -158,8 +158,16 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
                 Products.insert($scope.newProduct);
             }
 
+            $scope.closeModal();
+        };
+
+        $('#productFormModal').on('hide.bs.modal', function (e) {
             $scope.resetProduct();
-        }
+        });
+
+        $scope.closeModal = function () {
+            $('#productFormModal').modal('hide');
+        };
 
         $scope.resetProduct();
     }

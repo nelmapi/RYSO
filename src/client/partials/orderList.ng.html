@@ -1,7 +1,9 @@
 <div>
+  <confirm-remove-dialog item-type="getType()" message="getDeleteMessage()" item-id="getOrderToDelete()._id"></confirm-remove-dialog>
   <table class="table table-striped table-hover">
     <thead>
         <tr>
+            <th>Opciones</th>
             <th>N# Orden</th>
             <th>Tipo</th>
             <th>Cliente</th>
@@ -11,6 +13,10 @@
     </thead>
     <tbody>
       <tr ng-repeat="order in orders">
+          <td style="display: flex;border-top:0px;">
+              <button ng-click="showRemoveDialog(order)" type="button" class="btn btn-danger glyphicon glyphicon-remove-circle" data-keyboard="true" style="margin-right: 3px;"></button>
+              <button ng-click="edit(order)" type="button" class="btn btn-info glyphicon glyphicon-edit editBtn" style="margin-right: 3px;"></button>
+          </td>
         <td>{{order.numOrder}}</td>
         <td>{{order.type}}</td>
         <td>{{order.client}}</td>
