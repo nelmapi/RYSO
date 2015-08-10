@@ -141,8 +141,6 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
 
         $scope.saveProduct = function () {
             if (!$scope.isProductFormValid()) return;
-
-            $scope.newProduct.productId = Counters.getNextSecuence('productId');
             if ($scope.newProduct._id) {
                 Products.update($scope.newProduct._id, 
                 {
@@ -155,7 +153,14 @@ angular.module("ryso").controller("CreateProductFormController", ['$scope', '$st
                     }
                 });
             } else {
-                Products.insert($scope.newProduct);
+                $meteor.call('saveProduct', $scope.newProduct).then(
+                    function (data) {
+                        $scope.closeModal();
+                    },
+                    function (err) {
+                        console.log('failed', err);
+                    }
+                );
             }
 
             $scope.closeModal();

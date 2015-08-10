@@ -1,7 +1,7 @@
 angular.module("ryso").controller("ProductsController", ['$scope', '$stateParams', '$meteor', '$filter',
     function($scope, $stateParams, $meteor, $filter){
 
-        $scope.products = $meteor.collection(Products);
+        $scope.products = $meteor.collection(Products).subscribe('allProducts');
         $scope.productToDelete = null;
         $scope.productToEdit = {};
 
