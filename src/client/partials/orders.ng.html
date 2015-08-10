@@ -6,15 +6,15 @@
     </div>
     <div class="orderViewOptions">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default newOrderBtn" value="newOrderBtn" ng-click="selection = 'newOrderBtn'">Nueva Orden</button>
-          <button type="button" class="btn btn-default orderListBtn" value="orderListBtn" ng-click="selection = 'orderListBtn'">Lista de Ordenes</button>
-          <button type="button" class="btn btn-default ordersOverviewBtn" value="ordersOverviewBtn" ng-click="selection = 'ordersOverviewBtn'">Vista General</button>
+          <button type="button" class="btn btn-default" ng-class="{'active' : selection == 'newOrderBtn'}" ng-click="selection = 'newOrderBtn'">Nueva Orden</button>
+          <button type="button" class="btn btn-default" ng-class="{'active' : selection == 'orderListBtn'}" ng-click="selection = 'orderListBtn'">Lista de Ordenes</button>
+          <button type="button" class="btn btn-default" ng-class="{'active' : selection == 'ordersOverviewBtn'}" ng-click="selection = 'ordersOverviewBtn'">Vista General</button>
         </div>
     </div>
 
-    <div ng-switch on="selection">
+    <div ng-switch on="selection" style="height:100%; width:100%;">
       <div ng-switch-default>
-        New Order
+        <new-order new-order="currentOrder"></new-order>
       </div>
       <div ng-switch-when="orderListBtn">
         <order-list></order-list>

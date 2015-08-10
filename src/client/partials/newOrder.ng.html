@@ -1,0 +1,46 @@
+<div id="newOrderMainPanel" class="newOrder panel panel-default">
+    <div id="detailsAndBeveragesPanel" class="newOrderDetailsAndBeverages panel panel-default">
+        <div id="detailsPanel" class="newOrderDetails panel panel-default">
+            <div id="detailsHeader" class="detailsHeader">
+                <h4>Detalle</h4>
+            </div>
+            <div id="detailsTable" class="detailsTable">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="detailTableHeader" width="15%">CANTIDAD</th>
+                            <th class="detailTableHeader" width="40%">CONCEPTO</th>
+                            <th class="detailTableHeader" width="15%">P. UNIT</th>
+                            <th class="detailTableHeader" width="15%">SUBTOTAL</th>
+                            <th class="detailTableHeader" width="15%">P. LLEVAR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(id, item) in newOrder.lineItems">
+                            <td class="detailTableColumn textCentered">
+                                <input type="number" min="0" max="100" ng-value="item.quantity" ng-model="item.quantity" ng-change="item.updateSubtotal()"
+                                        size="4" class="form-control textCentered inputQtty" />
+                            </td>
+                            <td class="detailTableColumn detailText">{{item.detail}}</td>
+                            <td class="detailTableColumn textCentered">{{item.price}}</td>
+                            <td class="detailTableColumn textCentered">{{item.subTotal}}</td>
+                            <td class="detailTableColumn textCentered">
+                                <input type="checkbox" ng-model="item.isForCarry" ng-change="item.updateSubtotal()"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="beveragesPanel" class="newOrderBeverages panel panel-default">
+            <button class="btn btn-default productBtn" ng-repeat="beverage in beverages" ng-click="addItem(beverage)">
+                <span>{{beverage.name}}</span>
+            </button>
+        </div>
+    </div>
+    <div id="productsPanel" class="newOrderProducts">
+        <button class="btn btn-default productBtn" ng-repeat="dish in dishes" ng-click="addItem(dish)">
+            <span>{{dish.name}}</span>
+        </button>
+    </div>
+</div>

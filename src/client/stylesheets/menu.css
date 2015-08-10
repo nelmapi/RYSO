@@ -1,0 +1,15 @@
+html, body {
+  height: 100%;
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+.page-header {
+    margin: 0px;
+}
+
+.panel {
+    margin-bottom: 0px;
+}
