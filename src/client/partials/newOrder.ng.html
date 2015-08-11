@@ -4,31 +4,45 @@
             <div id="detailsHeader" class="detailsHeader">
                 <h4>Detalle</h4>
             </div>
-            <div id="detailsTable" class="detailsTable">
-                <table class="table table-bordered">
+            <div id="scrollable-area" class="detailsTable">
+                <table class="table table-bordered newOrderDetailTable" fixed-table-headers="scrollable-area">
                     <thead>
                         <tr>
-                            <th class="detailTableHeader" width="15%">CANTIDAD</th>
-                            <th class="detailTableHeader" width="40%">CONCEPTO</th>
-                            <th class="detailTableHeader" width="15%">P. UNIT</th>
-                            <th class="detailTableHeader" width="15%">SUBTOTAL</th>
                             <th class="detailTableHeader" width="15%">P. LLEVAR</th>
+                            <th class="detailTableHeader" width="15%">CANTIDAD</th>
+                            <th class="detailTableHeader" width="45%">CONCEPTO</th>
+                            <th class="detailTableHeader" width="10%">P. UNIT</th>
+                            <th class="detailTableHeader" width="15%">SUBTOTAL</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="(id, item) in newOrder.lineItems">
                             <td class="detailTableColumn textCentered">
+                                <input type="checkbox" class="isForCarryProduct" ng-model="item.isForCarry" ng-change="item.updatePrice()"/>
+                            </td>
+                            <td class="detailTableColumn textCentered">
                                 <input type="number" min="0" max="100" ng-value="item.quantity" ng-model="item.quantity" ng-change="item.updateSubtotal()"
                                         size="4" class="form-control textCentered inputQtty" />
                             </td>
                             <td class="detailTableColumn detailText">{{item.detail}}</td>
-                            <td class="detailTableColumn textCentered">{{item.price}}</td>
-                            <td class="detailTableColumn textCentered">{{item.subTotal}}</td>
                             <td class="detailTableColumn textCentered">
-                                <input type="checkbox" ng-model="item.isForCarry" ng-change="item.updateSubtotal()"/>
+                                <input type="number" min="0" max="1000" ng-value="item.price" ng-model="item.price" ng-change="item.updateSubtotal()"
+                                        size="4" class="form-control textCentered inputQtty" />
                             </td>
+                            <td class="detailTableColumn textCentered">{{item.subTotal}}</td>
                         </tr>
                     </tbody>
+                </table>
+            </div>
+            <div class="detailsTableFooterPanel">
+                <table class="table table-bordered detailsTableFooter">
+                    <tfoot>
+                        <tr>
+                            <th width="70%"></th>
+                            <th width="15%" class="textAlignRight">Total:</th>
+                            <th width="15%" class="textCentered">{{newOrder.total}}</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -38,7 +52,7 @@
             </button>
         </div>
     </div>
-    <div id="productsPanel" class="newOrderProducts">
+    <div id="productsPanel" class="newOrderProducts panel panel-default">
         <button class="btn btn-default productBtn" ng-repeat="dish in dishes" ng-click="addItem(dish)">
             <span>{{dish.name}}</span>
         </button>
