@@ -1,11 +1,17 @@
 'use strict';
 
-var Inicio = require('./../pages/inicio.js');
+var Inicio = require('../pages/inicio.js');
+var label = require('../resources/ryso-labesl.json');
 
-describe('Inicio', function(){
+describe('Pagina Inicio', function(){
     var inicio = new Inicio();
 
+    beforeEach(function(){
+        inicio.get('/');
+        isAngularSite(false);
+    });
+
     it('should display restaurant title', function(){
-        expected(inicio.title.isDisplayed()).toBe(true);
+            expect(inicio.getTitle()).toContain(label.home.title);
     });
 });

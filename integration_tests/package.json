@@ -1,0 +1,32 @@
+{
+  "name": "ryso-integration-tests",
+  "version": "0.1.0",
+  "licence": "MIT",
+  "private": false,
+  "description": "Integration test for ryso project",
+  "author": "Jimena Terceros <mjimena.terceros@gmail.com>",
+  "scripts": {
+    "init": "npm install",
+    "updateWebDriver" : "./node_modules/protractor/bin/webdriver-manager update",
+    "startSelenium" : "./node_modules/protractor/bin/webdriver-manager start",
+    "integrationTests" : "protractor ./configuration/protractor-conf.js"
+  },
+  "contributors": [
+    {
+      "name": "Nelson Mamani",
+      "email": "mamani.charle@gmail.com"
+    },
+    {
+     "name": "Jimena Terceros",
+      "email": "mjimena.terceros@gmail.com"
+    }
+  ],
+  "dependencies": {
+    "protractor" : "~2.1.0",
+    "jasmine-core": "~2.3.4",
+    "jasmine-reporters": "~2.0.6",
+    "jasmine-spec-reporter": "~2.2.3",
+    "protractor-jasmine2-html-reporter": "0.0.5",
+    "selenium-standalone": "~4.4.2"
+  }
+}

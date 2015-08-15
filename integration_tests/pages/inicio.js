@@ -3,14 +3,24 @@
 (function (){
     'use strict';
 
-    this.inicioMenu = element(by.linkText('Inicio'));
-    this.title = element(by.id(''));
+    var Inicio = function() {
+
+        this.homeLink = element(by.id('homeLink'));
+        this.title = element(by.id('homeTitle'));
 
 
-    this.get = function (){
-        browser.get('/');
+        this.get = function (url) {
+            browser.get(url);
+        };
+
+        this.getTitle = function () {
+            return this.title.getText();
+        };
+
+        this.clickOnHomeLink = function () {
+            this.homeLink.click();
+        }
     };
-
 
     module.exports = Inicio;
 })();
