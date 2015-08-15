@@ -1,5 +1,5 @@
 <div id="newOrderMainPanel" class="newOrder panel panel-default">
-    <div id="detailsAndBeveragesPanel" class="newOrderDetailsAndBeverages panel panel-default">
+    <div id="detailsAndOptionsPanel" class="newOrderDetailsAndOptions panel panel-default">
         <div id="detailsPanel" class="newOrderDetails panel panel-default">
             <div id="detailsHeader" class="detailsHeader">
                 <h4>Detalle</h4>
@@ -16,17 +16,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="(id, item) in newOrder.lineItems">
+                        <tr ng-repeat="item in lineItems">
                             <td class="detailTableColumn textCentered">
-                                <input type="checkbox" class="isForCarryProduct" ng-model="item.isForCarry" ng-change="item.updatePrice()"/>
+                                <input type="checkbox" class="isForCarryProduct" ng-disabled="newOrder.isForCarry()" ng-model="item.isForCarry" ng-change="updateItemPrice(item)"/>
                             </td>
                             <td class="detailTableColumn textCentered">
-                                <input type="number" min="0" max="100" ng-value="item.quantity" ng-model="item.quantity" ng-change="item.updateSubtotal()"
+                                <input type="number" min="0" max="100" ng-value="item.quantity" ng-model="item.quantity" ng-change="updateItemSubTotal(item)"
                                         size="4" class="form-control textCentered inputQtty" />
                             </td>
                             <td class="detailTableColumn detailText">{{item.detail}}</td>
                             <td class="detailTableColumn textCentered">
-                                <input type="number" min="0" max="1000" ng-value="item.price" ng-model="item.price" ng-change="item.updateSubtotal()"
+                                <input type="number" min="0" max="1000" ng-value="item.price" ng-model="item.price" ng-change="updateItemSubTotal(item)"
                                         size="4" class="form-control textCentered inputQtty" />
                             </td>
                             <td class="detailTableColumn textCentered">{{item.subTotal}}</td>
@@ -38,23 +38,63 @@
                 <table class="table table-bordered detailsTableFooter">
                     <tfoot>
                         <tr>
-                            <th width="70%"></th>
-                            <th width="15%" class="textAlignRight">Total:</th>
+                            <th width="75%"></th>
+                            <th width="10%" class="textAlignRight">Total:</th>
                             <th width="15%" class="textCentered">{{newOrder.total}}</th>
                         </tr>
                     </tfoot>
                 </table>
             </div>
         </div>
-        <div id="beveragesPanel" class="newOrderBeverages panel panel-default">
-            <button class="btn btn-default productBtn" ng-repeat="beverage in beverages" ng-click="addItem(beverage)">
-                <span>{{beverage.name}}</span>
-            </button>
+        <div id="optionsPanel" class="newOrderOptions panel panel-default">
+            <div id="optionsHeader" class="textCentered">
+                <h4>Orden</h4>
+            </div>
+            <div class="newOrderOptionsContainer panel panel-default">
+                <div class="fullWidthPanel textCentered">
+                    <div class="btn-group" role="group">
+                      <button type="button" class="btn btn-default btn-xs" ng-class="{'active' : newOrder.isServedInTable()}" ng-click="newOrder.serveInTable()" onclick="this.blur();">Mesa</button>
+                      <button type="button" class="btn btn-default btn-xs" ng-class="{'active' : newOrder.isForCarry()}" ng-click="newOrder.toCarry()" onclick="this.blur();">Llevar</button>
+                    </div>
+                </div>
+                <form class="form-horizontal">
+                    <div class="form-group form-group-sm">
+                      <label class="col-sm-5 control-label" for="isReservationCheckBox">Reservacion</label>
+                      <div class="col-sm-4">
+                        <input id="isReservationCheckBox" type="checkbox" ng-model="newOrder.reservation" data-toggle="toggle" data-on="Si" data-off="No" data-size="mini">
+                      </div>
+                    </div>
+                    <div class="form-group form-group-sm" ng-if="newOrder.reservation">
+                      <div class="col-sm-12">
+                        <input class="form-control" type="text" ng-value="newOrder.client" ng-model="newOrder.client" id="newOrderClientInput" placeholder="Nombre del cliente">
+                      </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                      <div class="col-sm-12">
+                        <textarea class="form-control newOrderCommentTextArea" ng-value="newOrder.comments" ng-model="newOrder.comments" id="newOrderCommentInput" placeholder="Comentarios"></textarea>
+                      </div>
+                    </div>
+                </form>
+            </div>
+            <div class="submitButtomsPanel textCentered">
+                <button type="button" ng-click="saveOrder()" class="btn btn-primary">Crear</button>
+                <button type="button" ng-click="clearOrder()" class="btn btn-primary">Cancelar</button>
+            </div>
         </div>
     </div>
     <div id="productsPanel" class="newOrderProducts panel panel-default">
-        <button class="btn btn-default productBtn" ng-repeat="dish in dishes" ng-click="addItem(dish)">
-            <span>{{dish.name}}</span>
-        </button>
+        <ul class="nav nav-tabs nav-justified">
+            <li role="presentation" ng-class="{'active': currentProductType == 'Plato'}">
+                <a href="#" ng-click="setProductType('Plato')">Platos</a>
+            </li>
+            <li role="presentation" ng-class="{'active': currentProductType == 'Bebida'}">
+                <a href="#" ng-click="setProductType('Bebida')">Bebidas</a>
+            </li>
+        </ul>
+        <div class="panel panel-default productListPanel">
+            <button class="btn btn-default productBtn" ng-repeat="product in products" ng-click="addItem(product)">
+                <span>{{product.name}}</span>
+            </button>
+        </div>
     </div>
 </div>

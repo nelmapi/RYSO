@@ -14,7 +14,7 @@
 
     <div ng-switch on="selection" style="height:100%; width:100%;">
       <div ng-switch-default>
-        <new-order new-order="currentOrder"></new-order>
+        <new-order new-order="getCurrentOrder()" line-items="getLineItems()"></new-order>
       </div>
       <div ng-switch-when="orderListBtn">
         <order-list></order-list>

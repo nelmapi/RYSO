@@ -1,13 +1,7 @@
 // Collection
 Orders = new Mongo.Collection('Orders', {
     transform: function (order) {
-        order.lineItems = LineItems.find({order_id: {$eq: order._id}});
-        order.addItem = function (product) {
-            Order.prototype.addItem.call(this, product);
-        };
-        order.updateTotal = function () {
-            Order.prototype.updateTotal.call(this);
-        };
+        return new Order(order);
     }
 });
 
@@ -32,35 +26,110 @@ OrderContans.BEVERAGES_DELIVERED_STATE = 'Despachado';
 
 // JS Object
 
-Order = function () {
-    this.numOrder = '';
-    this.type = OrderContans.ON_TABLE_TYPE;
-    this.client = '';
-    this.state = OrderContans.PENDING_STATE;
-    this.dishesState = OrderContans.DISHES_PENDING_STATE;
-    this.beveragesState = OrderContans.BEVERAGES_PENDING_STATE;
-    this.comment = '';
-    this.lineItems = {};
-    this.total = 0;
+Order = function (order) {
+    if (order) {
+        _.extend(this, order);
+    } else {
+        this.numOrder = '';
+        this.type = OrderContans.ON_TABLE_TYPE;
+        this.client = '';
+        this.state = OrderContans.PENDING_STATE;
+        this.dishesState = OrderContans.DISHES_PENDING_STATE;
+        this.beveragesState = OrderContans.BEVERAGES_PENDING_STATE;
+        this.comments = '';
+        this.reservation = false;
+        this.total = 0;
+    }
+
+    this.$$lineItems = {};
+};
+
+Order.prototype.getRawOrder = function () {
+    var rawOrder = {
+        type: this.type,
+        client: this.client,
+        state : this.state,
+        dishesState : this.dishesState,
+        beveragesState : this.beveragesState,
+        comments: this.comments,
+        reservation : this.reservation,
+        total: this.total
+    };
+
+    if (this._id) {
+        rawOrder['_id'] = this._id;
+    }
+
+    return rawOrder;
+};
+
+Order.prototype.setLineItems = function (lineItems) {
+    this.$$lineItems = lineItems;
+};
+
+Order.prototype.hasProductItem = function (productId) {
+    return this.$$lineItems[productId] !== undefined;
 };
 
 Order.prototype.addItem = function (product) {
-    if (this.lineItems[product._id]) {
-        this.lineItems[product._id].quantity++;
-        this.lineItems[product._id].updateSubtotal();
+
+    var lineItem = null;
+    if (this.hasProductItem(product._id)) {
+        lineItem = this.$$lineItems[product._id];
+        lineItem.quantity ++;
+        lineItem.updateSubtotal();
     } else {
-        this.lineItems[product._id] = new LineItem(product, this);
+        lineItem = new LineItem(product, this);
+        this.$$lineItems[product._id] = lineItem;
     }
-    console.log('addItem: ', this.lineItems[product._id]);
+
     this.updateTotal();
+    return lineItem;
+};
+
+Order.prototype.isNew = function () {
+    return this._id === undefined;
 };
 
 Order.prototype.updateTotal = function () {
-    this.lineItems = this.lineItems || {};
     var result = 0;
-    for (productId in this.lineItems) {
-        result += this.lineItems[productId].subTotal;
-    }
+    this.forEachLineItem(function (lineItem) {
+        result += lineItem.subTotal;
+    });
+
     this.total = result;
-    console.log('updateTotal: ', this.total);
+};
+
+Order.prototype.forEachLineItem = function (callback) {
+    for (productId in this.$$lineItems) {
+        callback(this.$$lineItems[productId]);
+    }
+};
+
+Order.prototype.setReservation = function(reservation) {
+    this.reservation = reservation;
+};
+
+Order.prototype.setAllLineItemsToCarry = function(toCarry) {
+    this.forEachLineItem(function (lineItem) {
+        lineItem.isForCarry = toCarry;
+    });
+};
+
+Order.prototype.serveInTable = function () {
+    this.type = OrderContans.ON_TABLE_TYPE;
+    this.setAllLineItemsToCarry(false);
+};
+
+Order.prototype.toCarry = function () {
+    this.type = OrderContans.TO_CARRY_TYPE;
+    this.setAllLineItemsToCarry(true);
+};
+
+Order.prototype.isServedInTable = function () {
+    return this.type == OrderContans.ON_TABLE_TYPE;
+};
+
+Order.prototype.isForCarry = function () {
+    return this.type == OrderContans.TO_CARRY_TYPE;
 };

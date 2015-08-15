@@ -1,14 +1,7 @@
 // Collection
 LineItems = new Mongo.Collection('LineItems', {
     transform: function (item) {
-        item.product = Products.findOne(item.product_id);
-        item.order = Orders.findOne(item.order_id);
-        item.updateSubtotal = function () {
-            LineItem.prototype.updateSubtotal.call(this);
-        };
-        item.updatePrice = function () {
-            LineItem.prototype.updatePrice.call(this);
-        };
+        return new LineItem(item);
     }
 });
 
@@ -19,27 +12,31 @@ LineItemConstans.PREPARATION_DONE_STATE = 'Preparado';
 LineItemConstans.DELIVERED_STATE = 'Despachado';
 
 // JS Object
-LineItem = function(product, order) {
-    this.quantity = product ? 1 : 0;
-    this.detail = product ? product.name : '';
-    this.price = product ? product.localPrice : 0;
-    this.subTotal = (this.quantity * this.price);
-    this.product = product || {};
-    this.product_id = this.product._id || '';
-    this.order = order || {};
-    this.order_id = this.order._id || '';
-    this.isForCarry = order.isForCarry || false;
+LineItem = function() {
+    if (arguments.length == 1) {
+        _.extend(this, arguments[0]);
+    } else {
+        var product = arguments[0] || {};
+        var order = arguments[1] || {};
+        this.quantity = product.name ? 1 : 0;
+        this.detail = product.name || '';
+        this.price = product.localPrice || 0;
+        this.subTotal = (this.quantity * this.price);
+        this.product_id = product._id || '';
+        this.order_id = order._id || '';
+        this.isForCarry = order.isForCarry() || false;
+    }
 };
+
+LineItem.prototype.setOrderId = function (orderId) {
+    this.order_id = orderId;
+}
 
 LineItem.prototype.updateSubtotal = function () {
     if (this.price && this.quantity) {
         this.subTotal = this.price * this.quantity;
     } else {
         this.subTotal = 0;
-    }
-
-    if (this.order && this.order.updateTotal) {
-        this.order.updateTotal();
     }
 };
 

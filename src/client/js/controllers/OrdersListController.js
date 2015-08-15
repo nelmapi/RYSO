@@ -1,6 +1,8 @@
 angular.module("ryso").controller("OrderListController", ['$scope', '$stateParams', '$meteor', '$filter',
   function($scope, $stateParams, $meteor, $filter){
 
+      $meteor.subscribe('allOrders');
+
       $scope.orderToDelete = null;
       $scope.orderToEdit = null;
 
@@ -35,8 +37,7 @@ angular.module("ryso").controller("OrderListController", ['$scope', '$stateParam
       });
 
       $scope.edit = function(order) {
-        $scope.orderToEdit = order;
-        $('#productFormModal').modal('show');
+        $scope.$emit('editOrder', order._id);
       };
   }
 ]);

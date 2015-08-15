@@ -6,7 +6,8 @@ angular.module("ryso").directive('newOrder', function () {
         transclude: true,
         controller: 'NewOrderController',
         scope: {
-            newOrder: '='
+            newOrder: '=',
+            lineItems: '='
         }
     }
 });

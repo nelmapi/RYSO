@@ -16,6 +16,11 @@ Meteor.methods({
         } else {
             throw new Meteor.Error("Error", "El producto no pudo insertarse debido a una falla en el servidor.");
         }
+    },
+    saveOrder : function (order) {
+        order.numOrder = Counters.getNextSecuence('orderNumber');
+        var orderId = Orders.insert(order);
+        return orderId;
     }
 });
 
@@ -23,4 +28,16 @@ Meteor.methods({
 
 Meteor.publish('allProducts', function () {
     return Products.find();
+});
+
+//publish orders
+
+Meteor.publish('allOrders', function () {
+    return Orders.find();
+});
+
+// publish sets of line items
+
+Meteor.publish('orderItems', function (orderId) {
+    return LineItems.find({order_id: orderId});
 });
