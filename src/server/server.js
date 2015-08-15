@@ -21,6 +21,11 @@ Meteor.methods({
         order.numOrder = Counters.getNextSecuence('orderNumber');
         var orderId = Orders.insert(order);
         return orderId;
+    },
+    deleteOrder : function (orderId) {
+        //delete line Items
+        LineItems.remove({order_id: orderId});
+        Orders.remove(orderId);
     }
 });
 

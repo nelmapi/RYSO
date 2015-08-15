@@ -32,7 +32,16 @@ angular.module("ryso").controller("OrderListController", ['$scope', '$stateParam
 
       $scope.$on('confirmRemoveSuccess', function(event, itemId, itemType) {
         if (itemType === 'Orden') {
-          Orders.remove(itemId);
+            // LineItems.remove({order_id: itemId});
+            // Orders.remove(itemId);
+            $meteor.call('deleteOrder', itemId).then(
+                function (data) {
+                    console.log('Order Deleted: ' + itemId);
+                },
+                function (err) {
+                    console.log('failed', err);
+                }
+            );
         }
       });
 
