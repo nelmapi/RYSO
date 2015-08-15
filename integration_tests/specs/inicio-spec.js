@@ -1,7 +1,7 @@
 'use strict';
 
 var Inicio = require('../pages/inicio.js');
-var label = require('../resources/ryso-labesl.json');
+var label = require('../resources/ryso-label.json');
 
 describe('Pagina Inicio', function(){
     var inicio = new Inicio();
