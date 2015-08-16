@@ -1,5 +1,5 @@
-angular.module("ryso").controller("NewOrderController", ['$scope', '$stateParams', '$meteor', '$filter',
-    function($scope, $stateParams, $meteor, $filter) {
+angular.module("ryso").controller("NewOrderController", ['$scope', '$stateParams', '$meteor', '$filter', '$timeout',
+    function($scope, $stateParams, $meteor, $filter, $timeout) {
 
         $meteor.subscribe('allProducts');
         $scope.currentProductType = 'Plato';
@@ -37,8 +37,6 @@ angular.module("ryso").controller("NewOrderController", ['$scope', '$stateParams
             };
 
             if ($scope.newOrder.isNew()) {
-                //var orderId = Orders.insert($scope.newOrder.getRawOrder());
-
                 $meteor.call('saveOrder', $scope.newOrder.getRawOrder()).then(
                     function (orderId) {
                         $scope.saveLineItems(orderId);
@@ -55,14 +53,13 @@ angular.module("ryso").controller("NewOrderController", ['$scope', '$stateParams
                 $scope.saveLineItems($scope.newOrder._id);
                 $scope.clearOrder();
             }
-
-
         };
 
         $scope.saveLineItems = function (orderId) {
             var newItems = [];
             $scope.lineItems.forEach(function (item) {
                 item.setOrderId(orderId);
+                item.removeReferences();
                 newItems.push(item);
             });
 
@@ -70,16 +67,23 @@ angular.module("ryso").controller("NewOrderController", ['$scope', '$stateParams
             $scope.lineItems.save(newItems);
         };
 
+        $scope.updateToggleButton = function () {
+            if ($scope.newOrder.reservation) {
+                $('#isReservationCheckBox').bootstrapToggle('on');
+            } else {
+                $('#isReservationCheckBox').bootstrapToggle('off');
+            }
+        };
+
         $scope.clearOrder = function () {
             $scope.$emit('clearCurrentOrder');
+            $timeout($scope.updateToggleButton, 200, false);
         };
 
         angular.element(document).ready(function () {
-            $scope.isReservationToogle = $('#isReservationCheckBox').bootstrapToggle({on: 'Si', off: 'No', size: 'mini'});
+            $('#isReservationCheckBox').bootstrapToggle({on: 'Si', off: 'No', size: 'mini'});
 
-            if ($scope.newOrder.reservation) {
-                $('#isReservationCheckBox').bootstrapToggle('on');
-            }
+            $scope.updateToggleButton();
 
             $('#isReservationCheckBox').change(function() {
                 $scope.newOrder.reservation = $(this).prop('checked');

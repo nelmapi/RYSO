@@ -16,13 +16,13 @@ LineItem = function() {
     if (arguments.length == 1) {
         _.extend(this, arguments[0]);
     } else {
-        var product = arguments[0] || {};
+        this.product = arguments[0] || {};
         var order = arguments[1] || {};
-        this.quantity = product.name ? 1 : 0;
-        this.detail = product.name || '';
-        this.price = product.localPrice || 0;
+        this.quantity = this.product.name ? 1 : 0;
+        this.detail = this.product.name || '';
+        this.price = this.product.localPrice || 0;
         this.subTotal = (this.quantity * this.price);
-        this.product_id = product._id || '';
+        this.product_id = this.product._id || '';
         this.order_id = order._id || '';
         this.isForCarry = order.isForCarry() || false;
     }
@@ -30,7 +30,11 @@ LineItem = function() {
 
 LineItem.prototype.setOrderId = function (orderId) {
     this.order_id = orderId;
-}
+};
+
+LineItem.prototype.removeReferences = function () {
+    delete this.product;
+};
 
 LineItem.prototype.updateSubtotal = function () {
     if (this.price && this.quantity) {
