@@ -113,7 +113,9 @@ Order.prototype.setReservation = function(reservation) {
 Order.prototype.setAllLineItemsToCarry = function(toCarry) {
     this.forEachLineItem(function (lineItem) {
         lineItem.isForCarry = toCarry;
+        lineItem.updatePrice();
     });
+    this.updateTotal();
 };
 
 Order.prototype.serveInTable = function () {
