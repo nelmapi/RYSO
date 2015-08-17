@@ -184,3 +184,74 @@
 .orderListTable td {
     vertical-align: middle !important;
 }
+
+.orders-overview-panel {
+    display: block;
+    text-align: center;
+}
+
+.order-list-container {
+    display: block;
+    margin: 20px 0 5px 0;
+}
+
+.sortable-container-panel {
+    background-color: green;
+}
+
+#ordersOverviewContainer { margin: 0; padding: 0 10px 0 10px;}
+#ordersOverviewContainer table {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+#ordersOverviewContainer {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.columnHeader {
+    text-align: center;
+    background: #fafafa linear-gradient(to bottom, #ffffff, #f2f2f2) repeat-x;
+    padding: 5px 0;
+    font-size: 20px;
+    font-weight: normal;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid #dddddd;
+}
+
+#columns { margin: 20px 0 5px 0;}
+#columns > div { padding-left: 5px; padding-right:5px;}
+
+.column {
+    border: solid 1px darkgrey;
+    box-shadow: rgba(0, 0, 0, 0.7) 0 1px 10px 0;
+}
+.card-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    min-height: 50px;
+}
+
+.noMargin { margin-bottom: 0;}
+
+.default {
+    box-shadow: inset rgba(0, 0, 0, 0.0980392) 0 1px 10px 0;
+}
+.default-color { background-color: #ffffff; }
+
+.card {
+   padding: 10px;
+}
+
+.card-title {
+    color: #7c9eb2;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1.5em;
+    padding: 2px 1px;
+    display: block;
+}

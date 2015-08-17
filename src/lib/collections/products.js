@@ -1,1 +1,3 @@
-Products = new Mongo.Collection('Products');
+Products = new Mongo.Collection('Products', {
+    idGeneration: 'MONGO'
+});

@@ -1,3 +1,17 @@
-<div id="ordersOverviewPanel">
-    New Overview Panel
+<div id="ordersOverviewContainer">
+    <div id="columns" class="row">
+        <div class="col-sm-{{12/ordersOverview.numberOfColumns}} col-xs-{{12/ordersOverview.numberOfColumns}}"
+             ng-repeat="column in ordersOverview.columns"
+             data-columnindex="{{$index}}" id="column{{$index}}">
+            <div class="column">
+                <div class="columnHeader">
+                    <span>{{column.state}} ({{column.orders.length}})</span>
+                </div>
+                <ul class="cards card-list" as-sortable="overviewSortOptions" ng-model="column.orders">
+                    <li class="card" ng-repeat="card in column.orders" as-sortable-item ng-include="'client/partials/orderCard.ng.html'">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>

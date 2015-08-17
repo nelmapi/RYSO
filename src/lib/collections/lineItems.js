@@ -1,5 +1,6 @@
 // Collection
 LineItems = new Mongo.Collection('LineItems', {
+    idGeneration: 'MONGO',
     transform: function (item) {
         return new LineItem(item);
     }
@@ -25,6 +26,7 @@ LineItem = function() {
         this.product_id = this.product._id || '';
         this.order_id = order._id || '';
         this.isForCarry = order.isForCarry() || false;
+        this.state = LineItemConstans.PENDING_STATE;
     }
 };
 
