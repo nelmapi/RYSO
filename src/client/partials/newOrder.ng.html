@@ -47,8 +47,8 @@
             </div>
         </div>
         <div id="optionsPanel" class="newOrderOptions panel panel-default">
-            <div id="optionsHeader" class="textCentered">
-                <h4>Orden</h4>
+            <div id="optionsHeader" class="textCentered" ng-class="{'reservationItem' : !newOrder.isNew()}">
+                <h4>Orden {{newOrder.isNew() ? '' : 'Nro. ' + newOrder.numOrder}}</h4>
             </div>
             <div class="newOrderOptionsContainer panel panel-default">
                 <div class="fullWidthPanel textCentered">
@@ -77,7 +77,7 @@
                 </form>
             </div>
             <div class="submitButtomsPanel textCentered">
-                <button type="button" ng-click="saveOrder()" class="btn btn-primary">Crear</button>
+                <button type="button" ng-click="saveOrder()" class="btn btn-primary">Guardar</button>
                 <button type="button" ng-click="clearOrder()" class="btn btn-primary">Cancelar</button>
             </div>
         </div>
