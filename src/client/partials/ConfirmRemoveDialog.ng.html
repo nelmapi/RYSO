@@ -3,14 +3,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Eliminar {{itemType}}</h4>
+                <h4 id="removeTitle" class="modal-title">Eliminar {{itemType}}</h4>
             </div>
             <div class="modal-body">
-                <h6>{{message}}</h6>
+                <h6 id="removeDesc" >{{message}}</h6>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger deleteConfirmBtn" ng-click="removeProduct(itemId)">Eliminar</button>
-                <button type="button" class="btn btn-default cancelConfirmBtn" data-dismiss="modal">Cancelar</button>
+                <button id="removeProductBtn" type="button" class="btn btn-danger deleteConfirmBtn" ng-click="removeProduct(itemId)">Eliminar</button>
+                <button id="cancelProductBtn" type="button" class="btn btn-default cancelConfirmBtn" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>

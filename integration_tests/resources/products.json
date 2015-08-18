@@ -1,0 +1,32 @@
+{
+  "product1": {
+    "name": "Charque Maratajado",
+    "type": {
+      "label": "Plato",
+      "index": 1
+    },
+    "desc": "Carne seca con mote y papas",
+    "localPrice": 70,
+    "outsidePrice": 80
+  },
+  "product1_edited": {
+    "name": "Charque Normal",
+    "type": {
+      "label": "Plato",
+      "index": 1
+    },
+    "desc": "Carne seca con mote y papas y huevo",
+    "localPrice": 75,
+    "outsidePrice": 85
+  },
+  "product2": {
+    "name": "Fanta",
+    "type": {
+      "label": "Bebida",
+      "index": 2
+    },
+    "desc": "Fanta Gorda",
+    "localPrice": 10,
+    "outsidePrice": 10
+  }
+}

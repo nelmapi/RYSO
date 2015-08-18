@@ -1,9 +1,9 @@
 // modeling home page
 
-(function (){
+(function () {
     'use strict';
 
-    var Inicio = function() {
+    var Inicio = function () {
 
         this.homeLink = element(by.id('homeLink'));
         this.title = element(by.id('homeTitle'));

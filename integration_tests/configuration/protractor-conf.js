@@ -1,4 +1,14 @@
 // conf.js
+
+var HtmlReporter = require('protractor-jasmine2-html-reporter');
+
+var htmlReporter = new HtmlReporter({
+    savePath: '../integration_tests/reports/html/',
+    screenshotsFolder: 'images',
+    filePrefix: 'index'
+});
+
+
 exports.config = {
     allScriptsTimeout: 30000,
     baseUrl: 'http://localhost:3000',
@@ -7,9 +17,6 @@ exports.config = {
     framework: 'jasmine2',
     multiCapabilities: [{
         'browserName': 'chrome'
-        //'chromeOptions': {
-        //    args: ['--test-type']
-        //}
     }],
     jasmineNodeOpts: {
         showColors: true,
@@ -17,6 +24,7 @@ exports.config = {
     },
 
     onPrepare: function(){
+        jasmine.getEnv().addReporter(htmlReporter);
         global.EC = protractor.ExpectedConditions;
         browser.manage().window().maximize();
         global.isAngularSite = function(flag){

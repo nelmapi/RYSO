@@ -1,7 +1,7 @@
 <div class="container-fluid" ng-controller="ProductsController">
     <div class="row-fluid">
         <div class="page-header">
-          <h1>Productos</h1>
+          <h1 id="productTitle">Productos</h1>
         </div>
         <confirm-remove-dialog item-type="getType()" message="getDeleteMessage()" item-id="getProductToDelete()._id"></confirm-remove-dialog>
         <create-product-form new-product="getProductToEdit()"></create-product-form>
@@ -19,12 +19,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="p in products">
-                    <td>
-                        <div style="display:inline-flex">
-                            <button ng-click="showRemoveDialog(p)" type="button" class="btn btn-danger glyphicon glyphicon-remove-circle" data-keyboard="true" style="margin-right: 3px;"></button>
-                            <button ng-click="edit(p)" type="button" class="btn btn-info glyphicon glyphicon-edit editBtn" style="margin-right: 3px;"></button>
-                        </div>
+                <tr ng-repeat="p in products" name="{{p.name}}">
+                    <td class="options" style="display: flex;border-top:0px;">
+                        <button id="removeBtn" ng-click="showRemoveDialog(p)" type="button" class="btn btn-danger glyphicon glyphicon-remove-circle" data-keyboard="true" style="margin-right: 3px;"></button>
+                        <button id="editBtn" ng-click="edit(p)" type="button" class="btn btn-info glyphicon glyphicon-edit editBtn" style="margin-right: 3px;"></button>
                     </td>
                     <td>{{p.productId}}</td>
                     <td>{{p.name}}</td>
