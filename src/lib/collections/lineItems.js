@@ -1,6 +1,5 @@
 // Collection
 LineItems = new Mongo.Collection('LineItems', {
-    idGeneration: 'MONGO',
     transform: function (item) {
         return new LineItem(item);
     }

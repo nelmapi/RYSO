@@ -127,9 +127,14 @@
     border-top-right-radius: 0px;
 }
 
-.fullSizePanel {
+.isInFullScreen {
     width: 100%;
     height: 100%;
+    overflow: auto;
+}
+
+.isInFullScreen .textCentered {
+  padding-top: 10px
 }
 
 .fullWidthPanel {
@@ -169,6 +174,7 @@
 
 .newOrderCommentTextArea {
     max-width: 100%;
+    height: 170px !important;
     max-height: 170px;
 }
 
@@ -248,10 +254,15 @@
 }
 
 .card-title {
-    color: #7c9eb2;
+    color: darkorchid;
     text-decoration: none;
     font-weight: bold;
     line-height: 1.5em;
     padding: 2px 1px;
     display: block;
+}
+
+.card-comments {
+    word-break: break-word;
+    word-wrap: break-word;
 }

@@ -1,5 +1,8 @@
-<div id="ordersOverviewContainer">
-    <div id="columns" class="row">
+<div id="ordersOverviewContainer" fullscreen="isFullScreen" only-watched-property>
+    <div class="textCentered">
+        <button id="fullScreenBtn" ng-click="goFullScreen()" type="button" class="btn btn-default btn-xs">{{isFullScreen ? 'Salir de p' : 'P'}}antalla completa</button>
+    </div>
+    <div id="columns" class="row" >
         <div class="col-sm-{{12/ordersOverview.numberOfColumns}} col-xs-{{12/ordersOverview.numberOfColumns}}"
              ng-repeat="column in ordersOverview.columns"
              data-columnindex="{{$index}}" id="column{{$index}}">
@@ -8,7 +11,7 @@
                     <span>{{column.state}} ({{column.orders.length}})</span>
                 </div>
                 <ul class="cards card-list" as-sortable="overviewSortOptions" ng-model="column.orders">
-                    <li class="card" ng-repeat="card in column.orders" as-sortable-item ng-include="'client/partials/orderCard.ng.html'">
+                    <li class="card" ng-repeat="order in column.orders" as-sortable-item ng-include="'client/partials/orderCard.ng.html'">
                     </li>
                 </ul>
             </div>

@@ -60,6 +60,10 @@ angular.module("ryso").controller("OrdersController", ['$scope', '$stateParams',
             $scope.init();
         });
 
+        $scope.$on("$destroy", function () {
+            $scope.stopSubscription();
+        });
+
         $scope.init();
     }
 ]);

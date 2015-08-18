@@ -14,8 +14,10 @@
     <tbody>
       <tr ng-repeat="order in orders">
           <td>
-              <button ng-click="showRemoveDialog(order)" type="button" class="btn btn-danger glyphicon glyphicon-remove-circle" data-keyboard="true" style="margin-right: 3px;"></button>
-              <button ng-click="edit(order)" type="button" class="btn btn-info glyphicon glyphicon-edit editBtn" style="margin-right: 3px;"></button>
+              <div style="display:inline-flex">
+                  <button ng-click="showRemoveDialog(order)" type="button" class="btn btn-danger glyphicon glyphicon-remove-circle" data-keyboard="true" style="margin-right: 3px;"></button>
+                  <button ng-click="edit(order)" type="button" class="btn btn-info glyphicon glyphicon-edit editBtn" style="margin-right: 3px;"></button>
+              </div>
           </td>
         <td>{{order.numOrder}}</td>
         <td>{{order.type}}</td>

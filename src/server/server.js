@@ -29,21 +29,6 @@ Meteor.methods({
     }
 });
 
-Meteor.objectIdWithTimestamp = function (timestamp) {
-    // Convert string date to Date object (otherwise assume timestamp is a date)
-    if (typeof(timestamp) == 'string') {
-        timestamp = new Date(timestamp);
-    }
-
-    // Convert date object to hex seconds since Unix epoch
-    var hexSeconds = Math.floor(timestamp/1000).toString(16);
-
-    // Create an ObjectId with that hex timestamp
-    var constructedObjectId = new Mongo.ObjectID(hexSeconds + "0000000000000000");
-
-    return constructedObjectId
-};
-
 // publish product sets
 
 Meteor.publish('allProducts', function () {
@@ -57,11 +42,14 @@ Meteor.publish('allOrders', function () {
 });
 
 Meteor.publish('todayOrders', function() {
-    var objectId  = Meteor.objectIdWithTimestamp(new Date().toDateString());
-    return Orders.find({_id:{$gt: objectId}});
+    return Orders.find();
 });
 
 // publish sets of line items
+
+Meteor.publish('allItems', function () {
+    return LineItems.find();
+});
 
 Meteor.publish('orderItems', function (orderId) {
     return LineItems.find({order_id: orderId});

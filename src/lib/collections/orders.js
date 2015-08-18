@@ -1,6 +1,5 @@
 // Collection
 Orders = new Mongo.Collection('Orders', {
-    idGeneration: 'MONGO',
     transform: function (order) {
         return new Order(order);
     }
