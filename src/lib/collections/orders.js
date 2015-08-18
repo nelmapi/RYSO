@@ -14,6 +14,7 @@ OrderContans.RESERVATION_TYPE = 'Reserva';
 
 OrderContans.PENDING_STATE = 'Pendiente';
 OrderContans.IN_PROGRESS_STATE = 'En Preparacion';
+OrderContans.PREPARED_STATE = 'Preparado';
 OrderContans.DELIVERED_STATE = 'Despachado';
 
 OrderContans.DISHES_PENDING_STATE = 'Pendiente';

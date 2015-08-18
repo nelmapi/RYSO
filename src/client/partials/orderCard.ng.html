@@ -1,23 +1,26 @@
 <div as-sortable-item-handle>
     <div class="row">
-        <div class="col-sm-10">
+        <div class="col-sm-12">
             <span class="card-title">
                 <span>Orden Nro. {{order.numOrder}} </span>
-                <span ng-if="order.type == 'Mesa'" style="color: sienna;">({{order.type}})</span>
-                <span ng-if="order.type != 'Mesa'" style="color: royalblue;">({{order.type}})</span>
-                <span ng-if="order.reservation" style="color: green;">(Reserva)</span>
+                <span ng-if="order.isServedInTable()" ng-class="{'tableItem' : order.isServedInTable()}">({{order.type}})</span>
+                <span ng-if="order.isForCarry()" ng-class="{'carryItem' : order.isForCarry()}">({{order.type}})</span>
+                <span ng-if="order.reservation" class="reservationItem">(Reserva)</span>
             </span>
-            <ul>
-                <li ng-repeat="item in getLineItems(order._id)">
-                    ({{item.quantity}}) {{item.detail}}
+            <ul class="card-item-list">
+                <li ng-repeat="item in getLineItems(order._id)" ng-class="{'tableItem': !item.isForCarry, 'carryItem' : item.isForCarry}">
+                    ({{item.quantity}}) {{item.detail}} <span ng-if="order.isServedInTable() && item.isForCarry">(Llevar)</span>
                 </li>
             </ul>
             <div ng-init="order.showMore = false">
                 <div id="moreOrderInforPanel" ng-show="order.showMore">
                     <span class="card-title" ng-if="order.client">Cliente: <span style="color: black;">{{order.client}}</span></span>
-                    <span class="card-comments" ng-if="order.comments"><span class="card-title">Comments: </span>{{order.comments}}</span>
+                    <span class="card-comments" ng-if="order.comments">
+                        <span class="card-title">Comentarios: </span>
+                        <pre>{{order.comments}}</pre>
+                    </span>
                 </div>
-                <a data-no-drag ng-click="order.showMore = !order.showMore" style="cursor: pointer;">Mostrar {{order.showMore ? 'menos' : 'mas'}}...</a>
+                <a data-no-drag ng-if="order.client || order.comments" ng-click="order.showMore = !order.showMore" style="cursor: pointer;">Mostrar {{order.showMore ? 'menos' : 'mas'}}...</a>
             </div>
         </div>
     </div>

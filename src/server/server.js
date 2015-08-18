@@ -12,6 +12,7 @@ Meteor.methods({
     saveProduct : function (product) {
         if (product) {
             product.productId = Counters.getNextSecuence('productId');
+            product.createdDate = new Date().getTime();
             Products.insert(product);
         } else {
             throw new Meteor.Error("Error", "El producto no pudo insertarse debido a una falla en el servidor.");
@@ -19,6 +20,7 @@ Meteor.methods({
     },
     saveOrder : function (order) {
         order.numOrder = Counters.getNextSecuence('orderNumber');
+        order.createdDate = new Date().getTime();
         var orderId = Orders.insert(order);
         return orderId;
     },

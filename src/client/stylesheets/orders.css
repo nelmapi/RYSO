@@ -254,7 +254,7 @@
 }
 
 .card-title {
-    color: darkorchid;
+    color: black;
     text-decoration: none;
     font-weight: bold;
     line-height: 1.5em;
@@ -262,7 +262,24 @@
     display: block;
 }
 
+.card-item-list {
+    border-top: 1px solid #969396;
+    border-bottom: 1px solid #969396;
+}
+
 .card-comments {
     word-break: break-word;
     word-wrap: break-word;
+}
+
+.carryItem {
+    color: royalblue;
+}
+
+.tableItem {
+    color: sienna;
+}
+
+.reservationItem {
+    color: green;
 }

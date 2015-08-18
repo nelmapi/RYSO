@@ -33,8 +33,12 @@ angular.module("ryso").controller("OrdersOverviewController", ['$scope', '$state
             return Orders.find({state: OrderContans.IN_PROGRESS_STATE}, {sort: {numOrder: 1}});
         }, false);
 
+        $scope.preparedOrders = $meteor.collection(function() {
+            return Orders.find({state: OrderContans.PREPARED_STATE}, {sort: {numOrder: 1}});
+        }, false);
+
         $scope.deliveredOrders = $meteor.collection(function() {
-            return Orders.find({state: OrderContans.DELIVERED_STATE}, {sort: {numOrder: 1}});
+            return Orders.find({state: OrderContans.DISHES_DELIVERED_STATE}, {sort: {numOrder: 1}});
         }, false);
 
         var OrderColumn = function (state, orders) {
@@ -50,6 +54,7 @@ angular.module("ryso").controller("OrdersOverviewController", ['$scope', '$state
         var orderColumns = [
             new OrderColumn(OrderContans.PENDING_STATE, $scope.pendingOrders),
             new OrderColumn(OrderContans.IN_PROGRESS_STATE, $scope.inProgressOrders),
+            new OrderColumn(OrderContans.PREPARED_STATE, $scope.preparedOrders),
             new OrderColumn(OrderContans.DELIVERED_STATE, $scope.deliveredOrders)
         ];
 
@@ -59,9 +64,6 @@ angular.module("ryso").controller("OrdersOverviewController", ['$scope', '$state
         };
 
         $scope.overviewSortOptions = {
-            /*accept: function (sourceItemHandleScope, destSortableScope) {
-              return sourceItemHandleScope.itemScope.sortableScope.$id !== destSortableScope.$id;
-            },*/
             itemMoved: function (event) {
                 var newState = event.dest.sortableScope.$parent.column.state;
                 var order = event.source.itemScope.modelValue;
@@ -93,6 +95,10 @@ angular.module("ryso").controller("OrdersOverviewController", ['$scope', '$state
             if ($scope.allLineItems[orderId]) {
                 lineItems = $scope.allLineItems[orderId];
             }
+
+            lineItems.sort(function (a, b) {
+                return (a.isForCarry === b.isForCarry)? 0 : b.isForCarry? -1 : 1;
+            });
 
             return lineItems;
         };
