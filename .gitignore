@@ -1,2 +1,4 @@
 /.idea/
+/.meteor/
 /integration_tests/node_modules/
+/integration_tests/reports/
