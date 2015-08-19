@@ -1,0 +1,33 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button id="toggleButton" ng-if="isUserLogged" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarCollapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">RYSO</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse" ng-if="isUserLogged">
+      <ul class="nav navbar-nav">
+        <li class="menuItem" ng-class="{'active' : currentPageIs('homePage')}">
+          <a id="homeLink" href="/">Inicio</a>
+        </li>
+        <li class="menuItem" ng-class="{'active' : currentPageIs('products')}" ng-if="canViewProducts">
+          <a id="productsLink" href="/products">Productos</a>
+        </li>
+        <li class="menuItem" ng-class="{'active' : currentPageIs('orders')}" ng-if="canViewOrders">
+          <a id="ordersLink" href="/orders">Ordenes</a>
+        </li>
+        <li class="menuItem" ng-class="{'active' : currentPageIs('help')}">
+          <a id="helpLink" href="/help">Ayuda</a>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-right" role="search">
+        <button type="submit" class="btn btn-primary" ng-click="logout()">Salir</button>
+      </form>
+    </div>
+  </div>
+</nav>

@@ -4,6 +4,11 @@ Meteor.startup(function () {
         Counters.insert({_id: "productId", seq: 100});
         Counters.insert({_id: "orderNumber", seq: 1});
     }
+    if (!Meteor.users.find().count()) {
+        var adminUserId = Accounts.createUser({username:'admin', password: 'admin', profile: 'Administrador'});
+        var adminRoles = [UserRole.PRODUCT_MANAGER, UserRole.ORDER_MANAGER, UserRole.MANAGE_USERS, UserRole.MANAGE_ORDER_STATE, UserRole.VIEW_REPORTS];
+        Roles.addUsersToRoles(adminUserId, adminRoles);
+    }
 });
 
 // methods

@@ -136,3 +136,19 @@ Order.prototype.isServedInTable = function () {
 Order.prototype.isForCarry = function () {
     return this.type == OrderContans.TO_CARRY_TYPE;
 };
+
+Order.prototype.isPending = function () {
+    return this.state == OrderContans.PENDING_STATE;
+};
+
+Order.prototype.isInProgress = function () {
+    return this.state == OrderContans.IN_PROGRESS_STATE;
+};
+
+Order.prototype.isPrepared = function () {
+    return this.state == OrderContans.PREPARED_STATE;
+};
+
+Order.prototype.isDelivered = function () {
+    return this.state == OrderContans.DELIVERED_STATE;
+};

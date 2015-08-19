@@ -3,11 +3,14 @@ angular.module("ryso").config(['$urlRouterProvider', '$stateProvider', '$locatio
 
     $locationProvider.html5Mode(true);
 
+    $urlRouterProvider.otherwise('/');
+
     $stateProvider
       .state('home', {
         url: '/',
         templateUrl: 'client/partials/home.ng.html',
         controller: 'HomeController',
+        authenticate: true,
         onEnter: function($stateParams) {
             Session.set('currentPage', 'homePage');
         }
@@ -16,6 +19,7 @@ angular.module("ryso").config(['$urlRouterProvider', '$stateProvider', '$locatio
         url: '/products',
         templateUrl: 'client/partials/products.ng.html',
         controller: 'ProductsController',
+        authenticate: true,
         onEnter: function($stateParams) {
             Session.set('currentPage', 'products');
         }
@@ -24,6 +28,7 @@ angular.module("ryso").config(['$urlRouterProvider', '$stateProvider', '$locatio
         url: '/orders',
         templateUrl: 'client/partials/orders.ng.html',
         controller: 'OrdersController',
+        authenticate: true,
         onEnter: function($stateParams) {
             Session.set('currentPage', 'orders');
         }
@@ -32,10 +37,31 @@ angular.module("ryso").config(['$urlRouterProvider', '$stateProvider', '$locatio
         url: '/help',
         templateUrl: 'client/partials/help.ng.html',
         controller: 'HelpPageController',
+        authenticate: true,
         onEnter: function($stateParams) {
             Session.set('currentPage', 'help');
+        }
+      }).state('login', {
+        url: '/login',
+        templateUrl: 'client/partials/login.ng.html',
+        controller: 'LoginController',
+        onEnter: function($stateParams) {
+            Session.set('currentPage', 'login');
         }
       });
 
     $urlRouterProvider.otherwise("/");
-  }]);
+  }
+]).run(function ($rootScope, $location) {
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+        var loggedIn = Meteor.userId() !== null;
+        if (toState.authenticate && !loggedIn) {
+            $rootScope.returnToState = toState.url;
+            $rootScope.returnToStateParams = toParams.Id;
+            $location.path('/login');
+        } else if (loggedIn && toState.name == 'login') {
+            $location.path('/');
+            $rootScope.initMenu();
+        }
+    });
+});

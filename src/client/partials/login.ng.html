@@ -1,0 +1,13 @@
+<div id="login-main-panel">
+    <form class="form-signin" novalidate ng-submit="login()">
+        <h2 class="form-signin-heading">RYSO</h2>
+
+        <div class="alert alert-danger" ng-if="showErrorMsg" role="alert">{{errorMsg}}</div>
+
+        <label for="userName" class="sr-only">Nombre de usuario</label>
+        <input type="text" id="userName" ng-model="userName" class="form-control" placeholder="Nombre de usuario" required autofocus>
+        <label for="userPasswd" class="sr-only">Contraseña</label>
+        <input type="password" id="userPasswd" ng-model="userPasswd" class="form-control" placeholder="Contraseña" required><br />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+    </form>
+</div>
