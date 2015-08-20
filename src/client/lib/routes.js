@@ -69,9 +69,8 @@ angular.module("ryso").config(['$urlRouterProvider', '$stateProvider', '$locatio
             $location.path('/login');
         } else if (loggedIn && toState.name == 'login') {
             $location.path('/');
-            $rootScope.initMenu();
-        } else if(!loggedIn) {
-            $rootScope.initMenu();
         }
+
+        $rootScope.initMenu();
     });
 });

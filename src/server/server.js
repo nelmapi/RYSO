@@ -4,10 +4,9 @@ Meteor.startup(function () {
         Counters.insert({_id: "productId", seq: 100});
         Counters.insert({_id: "orderNumber", seq: 1});
     }
-    if (!Meteor.users.find().count()) {
+    if (!Meteor.users.find({'profile.userType':{$eq:'root'}}).count()) {
         var adminUserId = Accounts.createUser({username:'admin', password: 'admin', profile: {firstName: 'Administrador', userType: 'root'}});
-        var adminRoles = [UserRole.PRODUCT_MANAGER, UserRole.ORDER_MANAGER, UserRole.MANAGE_USERS, UserRole.MANAGE_ORDER_STATE, UserRole.VIEW_REPORTS];
-        Roles.addUsersToRoles(adminUserId, adminRoles);
+        Roles.setUserRoles(adminUserId, UserRole.admin.roles);
     }
 });
 
@@ -38,8 +37,27 @@ Meteor.methods({
         LineItems.remove({order_id: orderId});
         Orders.remove(orderId);
     },
-    setUserPassword: function (userId, password) {
-        Accounts.setPassword(userId, password);
+    setUserPassword: function (userId, profile) {
+        Accounts.setPassword(userId, profile.password);
+        this.setUserRoles(userId, profile.userType);
+    },
+    setUserRoles : function (userId, userType) {
+        switch(userType) {
+            case UserRole.admin.name:
+                Roles.setUserRoles(userId, UserRole.admin.roles);
+                break;
+            case UserRole.cashier.name:
+                Roles.setUserRoles(userId, UserRole.cashier.roles);
+                break;
+            case UserRole.chef.name:
+                Roles.setUserRoles(userId, UserRole.chef.roles);
+                break;
+            case UserRole.waiter.name:
+                Roles.setUserRoles(userId, UserRole.waiter.roles);
+                break;
+            default:
+                console.log('Invalid UserType: ' + userType);
+        }
     }
 });
 

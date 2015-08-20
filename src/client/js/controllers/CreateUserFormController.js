@@ -260,19 +260,14 @@ angular.module("ryso").controller("CreateUserFormController", ['$rootScope', '$s
                     });
                 } else {
 
-                    Meteor.users.update($scope.newUser._id, {$set: usertoUpsert});
-                    if ($scope.newUser.profile.password) {
-                        $meteor.call('setUserPassword', $scope.newUser._id, $scope.newUser.profile.password).then(
-                            function (data) {
-                                $scope.successSave($scope.SUCESS_UPDATE_MESSAGE);
-                            },
-                            function (err) {
-                                $scope.message = $scope.ERROR_UPDATE_MESSAGE;
-                                console.log('failed', err);
-                            }
-                        );
+                    var userId = $scope.newUser._id;
+                    var userProfile  = $scope.newUser.profile;
+
+                    Meteor.users.update(userId, {$set: usertoUpsert});
+                    if (userProfile.password) {
+                        $meteor.call('setUserPassword', userId, userProfile).then($scope.successCallback, $scope.errorCallback );
                     } else {
-                        $scope.successSave($scope.SUCESS_UPDATE_MESSAGE);
+                        $meteor.call('setUserRoles', userId, userProfile.userType).then($scope.successCallback, $scope.errorCallback);
                     }
                 }
 
@@ -281,6 +276,15 @@ angular.module("ryso").controller("CreateUserFormController", ['$rootScope', '$s
             } else if (!$scope.isValidPassword()) {
                 $scope.message = $scope.ERROR_INVALID_PASSWORD;
             }
+        };
+
+        $scope.successCallback = function (data) {
+            $scope.successSave($scope.SUCESS_UPDATE_MESSAGE);
+        };
+
+        $scope.errorCallback = function (err) {
+            $scope.message = $scope.ERROR_UPDATE_MESSAGE;
+            console.log('failed', err);
         };
 
         $scope.successSave = function (message) {
