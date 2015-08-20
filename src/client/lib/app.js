@@ -1,4 +1,4 @@
-angular.module('ryso',['angular-meteor', 'ui.router', 'autofields', 'as.sortable', 'FBAngular']);
+angular.module('ryso',['angular-meteor', 'ui.router', 'autofields', 'as.sortable', 'FBAngular', 'ngSanitize']);
 
 // common directives
 angular.module("ryso").directive('fixedTableHeaders', ['$timeout', function($timeout) {

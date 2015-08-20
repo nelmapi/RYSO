@@ -41,6 +41,14 @@ angular.module("ryso").config(['$urlRouterProvider', '$stateProvider', '$locatio
         onEnter: function($stateParams) {
             Session.set('currentPage', 'help');
         }
+      }).state('users', {
+        url: '/users',
+        templateUrl: 'client/partials/users.ng.html',
+        controller: 'UsersController',
+        authenticate: true,
+        onEnter: function($stateParams) {
+            Session.set('currentPage', 'users');
+        }
       }).state('login', {
         url: '/login',
         templateUrl: 'client/partials/login.ng.html',
@@ -61,6 +69,8 @@ angular.module("ryso").config(['$urlRouterProvider', '$stateProvider', '$locatio
             $location.path('/login');
         } else if (loggedIn && toState.name == 'login') {
             $location.path('/');
+            $rootScope.initMenu();
+        } else if(!loggedIn) {
             $rootScope.initMenu();
         }
     });

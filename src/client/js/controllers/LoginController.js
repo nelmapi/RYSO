@@ -10,8 +10,6 @@ angular.module("ryso").controller("LoginController", ['$scope', '$state', '$mete
             $scope.userPasswd = $scope.userPasswd || '';
             Meteor.loginWithPassword($scope.userName, $scope.userPasswd, function (exception) {
                 if (exception) {
-                    console.log('LoginException: ', exception);
-
                     $scope.showErrorMsg = true;
                     switch (exception.error) {
                         case 403: 
@@ -22,6 +20,7 @@ angular.module("ryso").controller("LoginController", ['$scope', '$state', '$mete
                             break;
                         default:
                             $scope.errorMsg = 'Error al ingresar al sistema.';
+                            console.log('LoginException: ', exception);
                     }
                 } else {
                     $scope.showErrorMsg = false;

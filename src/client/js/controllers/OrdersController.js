@@ -1,7 +1,9 @@
 angular.module("ryso").controller("OrdersController", ['$scope', '$stateParams', '$meteor', '$filter',
     function($scope, $stateParams, $meteor, $filter){
 
-        $meteor.subscribe('allOrders');
+        $meteor.subscribe('allOrders').then(function (subscriptionHandle) {
+            $scope.allOrdersSubscription = subscriptionHandle;
+        });;
         $scope.subscriptionHandle = null;
 
         $scope.init = function () {
@@ -45,6 +47,9 @@ angular.module("ryso").controller("OrdersController", ['$scope', '$stateParams',
         $scope.stopSubscription = function() {
             if ($scope.subscriptionHandle) {
                 $scope.subscriptionHandle.stop();
+            }
+            if ($scope.allOrdersSubscription) {
+                $scope.allOrdersSubscription.stop();
             }
         };
 

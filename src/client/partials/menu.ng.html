@@ -25,9 +25,19 @@
           <a id="helpLink" href="/help">Ayuda</a>
         </li>
       </ul>
-      <form class="navbar-form navbar-right" role="search">
+      <form class="navbar-form navbar-right">
         <button type="submit" class="btn btn-primary" ng-click="logout()">Salir</button>
       </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="menuItem">
+          <a id="usersLink" href="#">{{fullUserName}}</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" ng-if="canViewUsers">
+        <li class="menuItem" ng-class="{'active' : currentPageIs('users')}">
+          <a id="usersLink" href="/users">Usuarios</a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>

@@ -5,10 +5,14 @@ Meteor.startup(function () {
         Counters.insert({_id: "orderNumber", seq: 1});
     }
     if (!Meteor.users.find().count()) {
-        var adminUserId = Accounts.createUser({username:'admin', password: 'admin', profile: 'Administrador'});
+        var adminUserId = Accounts.createUser({username:'admin', password: 'admin', profile: {firstName: 'Administrador', userType: 'root'}});
         var adminRoles = [UserRole.PRODUCT_MANAGER, UserRole.ORDER_MANAGER, UserRole.MANAGE_USERS, UserRole.MANAGE_ORDER_STATE, UserRole.VIEW_REPORTS];
         Roles.addUsersToRoles(adminUserId, adminRoles);
     }
+});
+
+Accounts.validateLoginAttempt(function(attemptInfo) {
+    if (attemptInfo.methodName != 'createUser') return true;
 });
 
 // methods
@@ -33,6 +37,9 @@ Meteor.methods({
         //delete line Items
         LineItems.remove({order_id: orderId});
         Orders.remove(orderId);
+    },
+    setUserPassword: function (userId, password) {
+        Accounts.setPassword(userId, password);
     }
 });
 
@@ -60,4 +67,8 @@ Meteor.publish('allItems', function () {
 
 Meteor.publish('orderItems', function (orderId) {
     return LineItems.find({order_id: orderId});
+});
+
+Meteor.publish('allUsers', function (orderId) {
+    return Meteor.users.find();
 });

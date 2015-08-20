@@ -1,0 +1,23 @@
+<div>
+    <a id="addUserBtn" class="btn btn-primary addUserFormBtn" data-toggle="modal" data-keyboard="true" href="#userFormModal">Agregar Usuario</a>
+    <div class="modal fade" tabindex='-1' id="userFormModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="addUserForm" ng-submit="saveUser()" novalidate>
+                    <div class="modal-header">
+                        <button type="button" class="close" ng-click="closeModal()" aria-hidden="true">&times;</button>
+                        <h4 id="productFormTitle" class="modal-title">Agregar Usuario</h4>
+                    </div>
+                    <div class="alert" ng-class="{'alert-danger' : !success, 'alert-success' : success}" ng-if="message" ng-bind-html="message" role="alert"></div>
+                    <div class="modal-body">
+                        <auto:fields fields="userSchema" data="newUser" options="userOptions"></auto:fields>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="saveBtn" type="submit" class="btn btn-success saveBtn">Guardar</button>
+                        <button id="cancelBtn" type="button" class="btn btn-default cancelBtn" ng-click="closeModal()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
