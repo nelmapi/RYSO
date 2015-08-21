@@ -21,9 +21,9 @@
         <li class="menuItem" ng-class="{'active' : currentPageIs('orders')}" ng-if="canViewOrders">
           <a id="ordersLink" href="/orders">Ordenes</a>
         </li>
-        <li class="menuItem" ng-class="{'active' : currentPageIs('help')}">
+        <!-- <li class="menuItem" ng-class="{'active' : currentPageIs('help')}">
           <a id="helpLink" href="/help">Ayuda</a>
-        </li>
+        </li> -->
       </ul>
       <form class="navbar-form navbar-right">
         <button type="submit" class="btn btn-primary" ng-click="logout()">Salir</button>
@@ -31,6 +31,11 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="menuItem">
           <a id="usersLink" href="#">{{fullUserName}}</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" ng-if="canViewReports">
+        <li class="menuItem" ng-class="{'active' : currentPageIs('reports')}">
+          <a id="reportsLink" href="/reports">Reportes</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right" ng-if="canViewUsers">

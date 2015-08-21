@@ -44,6 +44,13 @@ angular.module("ryso").config(['$urlRouterProvider', '$stateProvider', '$locatio
         onEnter: function($stateParams) {
             Session.set('currentPage', 'users');
         }
+      }).state('reports', {
+        url: '/reports',
+        templateUrl: 'client/partials/reports.ng.html',
+        controller: 'ReportsController',
+        onEnter: function($stateParams) {
+            Session.set('currentPage', 'reports');
+        }
       }).state('login', {
         url: '/login',
         templateUrl: 'client/partials/login.ng.html',

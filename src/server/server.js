@@ -90,6 +90,11 @@ Meteor.publish('orderItems', function (orderId) {
     return LineItems.find({order_id: orderId});
 });
 
+Meteor.publish('allOrderItems', function (orderIds) {
+    return LineItems.find({order_id: {$in: orderIds}});
+});
+
+
 Meteor.publish('allUsers', function (orderId) {
     return Meteor.users.find();
 });
