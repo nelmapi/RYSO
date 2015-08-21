@@ -9,14 +9,14 @@ angular.module("ryso").controller("OrdersController", ['$scope', '$stateParams',
         $scope.canManageOrders = userPermissions.canManageOrders;
         $scope.canViewOptionButtons = ($scope.canHandleOrderState && $scope.canManageOrders);
 
-        $scope.selection = $scope.canManageOrders ? 'newOrderBtn' : 'ordersOverviewBtn';
-
         $scope.setOptionView = function (optionView) {
             this.selection = optionView;
         };
 
         $scope.init = function () {
             $scope.currentOrder = $scope.currentOrder || new Order();
+
+            $scope.selection = $scope.canManageOrders ? 'newOrderBtn' : 'ordersOverviewBtn';
 
             if (!$scope.currentOrder.isNew()) {
                 $meteor.subscribe('orderItems', $scope.currentOrder._id).then(function (subscriptionHandle) {

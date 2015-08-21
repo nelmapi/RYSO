@@ -75,6 +75,7 @@ angular.module("ryso").controller("OrdersOverviewController", ['$scope', '$state
         var OrderColumn = function (state, orders) {
             this.state = state;
             this.orders = orders;
+            this.quantity = 0;
             this.sort = function () {
                 this.orders.sort(function (a, b) {
                     return a.numOrder - b.numOrder;
@@ -137,6 +138,10 @@ angular.module("ryso").controller("OrdersOverviewController", ['$scope', '$state
                 }
                 $scope.allLineItems[item.order_id].push(item);
             });
+        };
+
+        $scope.hasLineItems = function (orderId) {
+            return $scope.getLineItems(orderId).length > 0;
         };
 
         $scope.getLineItems = function (orderId) {

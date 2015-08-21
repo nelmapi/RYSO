@@ -14,10 +14,10 @@
              data-columnindex="{{$index}}" id="column{{$index}}">
             <div class="column">
                 <div class="columnHeader">
-                    <span>{{column.state}} ({{column.orders.length}})</span>
+                    <span>{{column.state}}</span>
                 </div>
                 <ul class="cards card-list" as-sortable="overviewSortOptions" ng-model="column.orders">
-                    <li class="card" ng-repeat="order in column.orders" ng-if="getLineItems(order._id).length" as-sortable-item ng-include="'client/partials/orderCard.ng.html'">
+                    <li class="card" ng-repeat="order in column.orders" ng-if="hasLineItems(order._id)" as-sortable-item ng-include="'client/partials/orderCard.ng.html'">
                     </li>
                 </ul>
             </div>
