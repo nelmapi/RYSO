@@ -6,9 +6,9 @@
     </div>
     <div class="orderViewOptions">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default" ng-class="{'active' : selection == 'newOrderBtn'}" ng-click="selection = 'newOrderBtn'">Nueva Orden</button>
-          <button type="button" class="btn btn-default" ng-class="{'active' : selection == 'orderListBtn'}" ng-click="selection = 'orderListBtn'">Lista de Ordenes</button>
-          <button type="button" class="btn btn-default" ng-class="{'active' : selection == 'ordersOverviewBtn'}" ng-click="selection = 'ordersOverviewBtn'">Vista General</button>
+          <button type="button" ng-show="canManageOrders" class="btn btn-default" ng-class="{'active' : selection == 'newOrderBtn'}" ng-click="setOptionView('newOrderBtn') ">Nueva Orden</button>
+          <button type="button" ng-show="canManageOrders" class="btn btn-default" ng-class="{'active' : selection == 'orderListBtn'}" ng-click="setOptionView('orderListBtn')">Lista de Ordenes</button>
+          <button type="button" ng-show="canViewOptionButtons" class="btn btn-default" ng-class="{'active' : selection == 'ordersOverviewBtn'}" ng-click="setOptionView('ordersOverviewBtn')">Vista General</button>
         </div>
     </div>
 

@@ -1,6 +1,12 @@
 <div id="ordersOverviewContainer" fullscreen="isFullScreen" only-watched-property>
-    <div class="textCentered">
-        <button id="fullScreenBtn" ng-click="goFullScreen()" type="button" class="btn btn-default btn-xs">{{isFullScreen ? 'Salir de p' : 'P'}}antalla completa</button>
+    <div class="orderTypeOptions">
+        <div class="btn-group btn-group-sm" role="group" ng-show="canHandleBeverageOrders">
+          <button type="button" class="btn btn-default" ng-class="{'active' : productType == 'Bebida'}" ng-click="productType = 'Bebida'">Platos</button>
+          <button type="button" class="btn btn-default" ng-class="{'active' : productType == 'Plato'}" ng-click="productType = 'Plato'">Bebidas</button>
+        </div>
+        <a ng-click="goFullScreen()" title="{{isFullScreen? 'Salir de p' : 'P'}}antalla completa">
+            <i class="goFullScreen glyphicon" ng-class="{'glyphicon-resize-full': !isFullScreen, 'glyphicon-resize-small' : isFullScreen}"></i>
+        </a>
     </div>
     <div id="columns" class="row" >
         <div class="col-sm-{{12/ordersOverview.numberOfColumns}} col-xs-{{12/ordersOverview.numberOfColumns}}"
@@ -11,7 +17,7 @@
                     <span>{{column.state}} ({{column.orders.length}})</span>
                 </div>
                 <ul class="cards card-list" as-sortable="overviewSortOptions" ng-model="column.orders">
-                    <li class="card" ng-repeat="order in column.orders" as-sortable-item ng-include="'client/partials/orderCard.ng.html'">
+                    <li class="card" ng-repeat="order in column.orders" ng-if="getLineItems(order._id).length" as-sortable-item ng-include="'client/partials/orderCard.ng.html'">
                     </li>
                 </ul>
             </div>

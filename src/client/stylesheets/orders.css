@@ -1,8 +1,15 @@
 .orderViewOptions {
     text-align: center;
     width: 100%;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
 }
+
+.orderTypeOptions {
+    text-align: center;
+    width: 100%;
+    padding-top: 10px;
+}
+
 
 .newOrder {
     width: 100%;
@@ -282,4 +289,12 @@
 
 .reservationItem {
     color: green;
+}
+
+.goFullScreen {
+    float: right;
+    padding-right: 10px;
+    font-size: 20px;
+    color: darkslategray;
+    cursor: pointer;
 }

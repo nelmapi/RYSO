@@ -4,6 +4,17 @@ angular.module("ryso").service('userPermissions', ['$rootScope', function (rootS
     userPermissions.refresh = function () {
         this.user = Meteor.user();
         this.isUserLogged = false;
+        this.fullUserName = '';
+        this.canViewProducts = false;
+        this.canViewOrders = false;
+        this.canManageOrders = false;
+        this.canViewUsers = false;
+        this.canViewReports = false;
+        this.canHandleKitchenOrders = false;
+        this.canHandleBeverageOrders = false;
+        this.canHandleDishOrders = false;
+        this.canHandleOrderState = false;
+
         if (this.user) {
             this.isUserLogged = true;
             this.userId = Meteor.userId();
@@ -15,8 +26,13 @@ angular.module("ryso").service('userPermissions', ['$rootScope', function (rootS
                                                                       UserRole.HANDLE_KITCHEN_ORDERS,
                                                                       UserRole.HANDLE_BEVERAGE_ORDERS,
                                                                       UserRole.HANDLE_DISH_ORDERS]);
+            this.canManageOrders = Roles.userIsInRole(this.userId, UserRole.MANAGE_ORDERS);
             this.canViewUsers = Roles.userIsInRole(this.userId, UserRole.MANAGE_USERS);
             this.canViewReports = Roles.userIsInRole(this.userId, UserRole.VIEW_REPORTS);
+            this.canHandleKitchenOrders = Roles.userIsInRole(this.userId, UserRole.HANDLE_KITCHEN_ORDERS);
+            this.canHandleBeverageOrders = Roles.userIsInRole(this.userId, UserRole.HANDLE_BEVERAGE_ORDERS);
+            this.canHandleDishOrders = Roles.userIsInRole(this.userId, UserRole.HANDLE_DISH_ORDERS);
+            this.canHandleOrderState = (this.canHandleKitchenOrders || this.canHandleBeverageOrders || this.canHandleDishOrders);
         }
     };
 

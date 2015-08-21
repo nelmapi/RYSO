@@ -1,14 +1,21 @@
-angular.module("ryso").controller("OrdersController", ['$scope', '$stateParams', '$meteor', '$filter',
-    function($scope, $stateParams, $meteor, $filter){
+angular.module("ryso").controller("OrdersController", ['$scope', '$stateParams', '$meteor', '$filter', 'userPermissions',
+    function($scope, $stateParams, $meteor, $filter, userPermissions){
 
         $meteor.subscribe('allOrders').then(function (subscriptionHandle) {
             $scope.allOrdersSubscription = subscriptionHandle;
-        });;
-        $scope.subscriptionHandle = null;
+        });
+
+        $scope.canHandleOrderState = userPermissions.canHandleOrderState;
+        $scope.canManageOrders = userPermissions.canManageOrders;
+        $scope.canViewOptionButtons = ($scope.canHandleOrderState && $scope.canManageOrders);
+
+        $scope.selection = $scope.canManageOrders ? 'newOrderBtn' : 'ordersOverviewBtn';
+
+        $scope.setOptionView = function (optionView) {
+            this.selection = optionView;
+        };
 
         $scope.init = function () {
-
-            $scope.selection = 'newOrderBtn';
             $scope.currentOrder = $scope.currentOrder || new Order();
 
             if (!$scope.currentOrder.isNew()) {

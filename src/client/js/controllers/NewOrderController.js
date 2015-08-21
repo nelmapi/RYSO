@@ -1,7 +1,9 @@
 angular.module("ryso").controller("NewOrderController", ['$scope', '$stateParams', '$meteor', '$filter', '$timeout',
     function($scope, $stateParams, $meteor, $filter, $timeout) {
 
-        $meteor.subscribe('allProducts');
+        $meteor.subscribe('allProducts').then(function (subscriptionHandle) {
+            $scope.productsSubscription = subscriptionHandle;
+        });
         $scope.currentProductType = 'Plato';
 
         $scope.products = $meteor.collection(function(){
@@ -79,6 +81,12 @@ angular.module("ryso").controller("NewOrderController", ['$scope', '$stateParams
             $scope.$emit('clearCurrentOrder');
             $timeout($scope.updateToggleButton, 200, false);
         };
+
+        $scope.$on("$destroy", function () {
+            if ($scope.productsSubscription) {
+                $scope.productsSubscription.stop();
+            }
+        });
 
         angular.element(document).ready(function () {
             $('#isReservationCheckBox').bootstrapToggle({on: 'Si', off: 'No', size: 'mini'});

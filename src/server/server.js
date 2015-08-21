@@ -4,13 +4,16 @@ Meteor.startup(function () {
         Counters.insert({_id: "productId", seq: 100});
         Counters.insert({_id: "orderNumber", seq: 1});
     }
-    if (!Meteor.users.find({'profile.userType':{$eq:'root'}}).count()) {
+    if (!Meteor.users.find({'profile.userType':'root'}).count()) {
         var adminUserId = Accounts.createUser({username:'admin', password: 'admin', profile: {firstName: 'Administrador', userType: 'root'}});
         Roles.setUserRoles(adminUserId, UserRole.admin.roles);
     }
 });
 
 Accounts.validateLoginAttempt(function(attemptInfo) {
+    if (attemptInfo.methodName == 'createUser') {
+        Meteor.call('setUserRoles', attemptInfo.user._id, attemptInfo.user.profile.userType);
+    }
     if (attemptInfo.methodName != 'createUser') return true;
 });
 
