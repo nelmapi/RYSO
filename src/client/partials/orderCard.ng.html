@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-sm-12">
             <span class="card-title">
-                <span>Orden Nro. {{order.numOrder}} </span>
-                <span ng-if="order.isServedInTable()" ng-class="{'tableItem' : order.isServedInTable()}">({{order.type}})</span>
+                <span>Nro. {{order.numOrder}} </span>
+                <span ng-if="order.isServedInTable()" ng-class="{'tableItem' : order.isServedInTable()}">({{order.type}} #{{order.tableNumber}})</span>
                 <span ng-if="order.isForCarry()" ng-class="{'carryItem' : order.isForCarry()}">({{order.type}})</span>
                 <span ng-if="order.reservation" class="reservationItem">(Reserva)</span>
             </span>

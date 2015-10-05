@@ -39,6 +39,7 @@ Order = function (order) {
         this.beveragesState = OrderContans.BEVERAGES_PENDING_STATE;
         this.comments = '';
         this.reservation = false;
+        this.tableNumber = '';
         this.total = 0;
     }
 
@@ -54,6 +55,7 @@ Order.prototype.getRawOrder = function () {
         beveragesState : this.beveragesState,
         comments: this.comments,
         reservation : this.reservation,
+        tableNumber: this.tableNumber,
         total: this.total
     };
 

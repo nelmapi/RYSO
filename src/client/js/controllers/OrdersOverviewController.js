@@ -119,6 +119,21 @@ angular.module("ryso").controller("OrdersOverviewController", ['$scope', '$state
                     order.state = newState;
                 }
 
+                order.inProgressDate = null;
+                order.preparedDate = null;
+                order.deliveredDate = null;
+
+                switch (newState) {
+                    case OrderContans.IN_PROGRESS_STATE:
+                        order.inProgressDate = new Date().getTime();
+                        break;
+                    case OrderContans.PREPARED_STATE:
+                        order.preparedDate = new Date().getTime();
+                        break;
+                    case OrderContans.DELIVERED_STATE:
+                        order.deliveredDate = new Date().getTime();
+                };
+
                 $meteor.collection(Orders, false).save(order);
                 event.dest.sortableScope.removeItem(event.dest.index);
                 event.dest.sortableScope.$parent.column.sort();

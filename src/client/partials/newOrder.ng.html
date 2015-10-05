@@ -64,7 +64,12 @@
                         <input id="isReservationCheckBox" type="checkbox" ng-model="newOrder.reservation" data-toggle="toggle" data-on="Si" data-off="No" data-size="mini">
                       </div>
                     </div>
-                    <div class="form-group form-group-sm" ng-if="newOrder.reservation">
+                    <div class="form-group form-group-sm" ng-if="newOrder.isServedInTable()">
+                      <div class="col-sm-12">
+                        <input class="form-control" type="number" ng-value="newOrder.tableNumber" ng-model="newOrder.tableNumber" id="newOrderTableNumberInput" placeholder="Numero de mesa">
+                      </div>
+                    </div>
+                    <div class="form-group form-group-sm">
                       <div class="col-sm-12">
                         <input class="form-control" type="text" ng-value="newOrder.client" ng-model="newOrder.client" id="newOrderClientInput" placeholder="Nombre del cliente">
                       </div>
