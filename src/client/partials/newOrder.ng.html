@@ -1,4 +1,7 @@
 <div id="newOrderMainPanel" class="newOrder panel panel-default">
+    <div ng-if="message" class="textCentered alert" ng-class="{'alert-success': successSave, 'alert-danger': !successSave}">
+        {{message}}
+    </div>
     <div id="detailsAndOptionsPanel" class="newOrderDetailsAndOptions panel panel-default">
         <div id="detailsPanel" class="newOrderDetails panel panel-default">
             <div id="detailsHeader" class="detailsHeader">
@@ -66,7 +69,7 @@
                     </div>
                     <div class="form-group form-group-sm" ng-if="newOrder.isServedInTable()">
                       <div class="col-sm-12">
-                        <input class="form-control" type="number" ng-value="newOrder.tableNumber" ng-model="newOrder.tableNumber" id="newOrderTableNumberInput" placeholder="Numero de mesa">
+                        <input class="form-control" type="number" min="1" ng-value="newOrder.tableNumber" ng-model="newOrder.tableNumber" id="newOrderTableNumberInput" placeholder="Numero de mesa">
                       </div>
                     </div>
                     <div class="form-group form-group-sm">

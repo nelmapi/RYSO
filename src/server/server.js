@@ -30,10 +30,17 @@ Meteor.methods({
         }
     },
     saveOrder : function (order) {
-        order.numOrder = Counters.getNextSecuence('orderNumber');
-        order.createdDate = new Date().getTime();
-        var orderId = Orders.insert(order);
-        return orderId;
+        var oldOrders = order.tableNumber ? Orders.find({tableNumber: order.tableNumber, state: {$ne: OrderContans.DELIVERED_STATE}}) : null;
+        if (!order.tableNumber || (oldOrders.count() == 0)) {
+            Orders.update({tableNumber: order.tableNumber, state: OrderContans.DELIVERED_STATE}, {$set: {hidden: true}}, {multi: true});
+            order.numOrder = Counters.getNextSecuence('orderNumber');
+            order.createdDate = new Date().getTime();
+            order.hidden = false;
+            var orderId = Orders.insert(order);
+            return orderId;
+        } else {
+            throw new Meteor.Error("tableNumber-exists");
+        }
     },
     deleteOrder : function (orderId) {
         //delete line Items
@@ -73,11 +80,11 @@ Meteor.publish('allProducts', function () {
 //publish orders
 
 Meteor.publish('allOrders', function () {
-    return Orders.find();
+    return Orders.find({hidden: false});
 });
 
 Meteor.publish('todayOrders', function() {
-    return Orders.find();
+    return Orders.find({hidden: false});
 });
 
 // publish sets of line items

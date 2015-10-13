@@ -35,17 +35,35 @@ angular.module("ryso").controller("NewOrderController", ['$scope', '$stateParams
         $scope.saveOrder = function() {
 
             if (!$scope.lineItems.length) {
+                $scope.successSave = false;
+                $scope.message = 'La orden no puede emitirse sin productos, por favor agrege algunos y vuelva a intentarlo.';
                 return;
             };
+
+            if ($scope.newOrder.isServedInTable() && !$scope.newOrder.tableNumber) {
+                $scope.successSave = false;
+                $scope.message = 'Por favor ingrese un numero de mesa (mayor a cero).';
+                return;
+            }
 
             if ($scope.newOrder.isNew()) {
                 $meteor.call('saveOrder', $scope.newOrder.getRawOrder()).then(
                     function (orderId) {
                         $scope.saveLineItems(orderId);
+                        $scope.message = 'Orden emitida exitosamente!';
                         $scope.clearOrder();
+                        $scope.successSave = true;
+                        $timeout(function () {
+                            $scope.message = '';
+                        }, 2500);
                     },
                     function (err) {
                         console.log('failed', err);
+                        if (err.error == 'tableNumber-exists') {
+                            $scope.successSave = false;
+                            $scope.message = 'La mesa #' + $scope.newOrder.tableNumber + ' ya fue asignado, por favor ingrese otro numero.';
+                            console.log($scope.message);
+                        }
                     }
                 );
             } else {
@@ -54,6 +72,11 @@ angular.module("ryso").controller("NewOrderController", ['$scope', '$stateParams
                 $meteor.collection(Orders, false).save(rawOrder);
                 $scope.saveLineItems($scope.newOrder._id);
                 $scope.clearOrder();
+                $scope.successSave = true;
+                $scope.message = 'Orden editada exitosamente!';
+                $timeout(function () {
+                    $scope.message = '';
+                }, 2500);
             }
         };
 
